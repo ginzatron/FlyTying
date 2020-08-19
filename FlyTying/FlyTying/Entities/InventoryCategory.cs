@@ -9,6 +9,7 @@ namespace FlyTying.Entities
     {
         public Guid CategoryId { get; set; }
         public string Name { get; set; }
+        public IEnumerable<InventoryItem> InventoryItems { get; set; }
     }
 
     // or shoudl I have a base Category class or interface and inventorycategory inherits from it
