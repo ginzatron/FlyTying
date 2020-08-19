@@ -7,7 +7,8 @@ namespace FlyTying.Entities
 {
     public class FlyMaterialOption : BaseEntity
     {
-        public Guid InventoryItemOptionId { get; set; } // do you even need the id?
+        public Guid InventoryItemOptionId { get; set; } // do you even need the id? how does this work with base entity?
+        public string Discriminator { get; set; }
         public string Value { get; set; }
     }
 }

@@ -12,3 +12,6 @@ namespace FlyTying.Entities
         public IEnumerable<FlyMaterial> FlyMaterials { get; set; } 
     }
 }
+
+// confusion about base entity. how do not use it and still haev generic repository
+// still don't know how to load all navigational properties autoatically on an entity
