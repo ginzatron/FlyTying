@@ -11,4 +11,6 @@ namespace FlyTying.Entities
         public InventoryCategory Category { get; set; }
         public IEnumerable<InventoryItemOption> ItemOptions { get; set; }
     }
+
+    // this might not even inherit from base entity
 }

@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class InventoryItemOption
+    public class FlyMaterialOption : BaseEntity
     {
-        public Guid ItemOptionId { get; set; }
+        public Guid InventoryItemOptionId { get; set; } // do you even need the id?
         public string Value { get; set; }
-
-        // not sure if this needs the InventoryItem InventoryItem {get; set;} navigational property
     }
 }
