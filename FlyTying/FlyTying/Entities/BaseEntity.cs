@@ -11,6 +11,6 @@ namespace FlyTying.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
 
-        // hash code for comparison
+        // TODO hash code for comparison
     }
 }
