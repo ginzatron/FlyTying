@@ -9,5 +9,6 @@ namespace FlyTying.Entities
     {
         public Guid FlyCategoryId { get; set; }
         public string Name { get; set; }
+        public IEnumerable<Fly> Flys { get; set; }
     }
 }
