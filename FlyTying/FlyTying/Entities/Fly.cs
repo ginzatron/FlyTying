@@ -8,6 +8,7 @@ namespace FlyTying.Entities
     public class Fly : BaseEntity
     {
         public string Name { get; set; }
+        // add user object
         public FlyCategory FlyCategory { get; set; }
         public IEnumerable<FlyMaterial> FlyMaterials { get; set; } 
     }
