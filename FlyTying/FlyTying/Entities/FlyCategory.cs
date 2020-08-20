@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyCategory
+    public class FlyCategory : BaseEntity
     {
-        public Guid FlyCategoryId { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Fly> Flys { get; set; }
+        public IEnumerable<Fly> Flies { get; set; }
     }
 }

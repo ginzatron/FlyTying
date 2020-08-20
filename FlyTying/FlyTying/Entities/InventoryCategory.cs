@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class InventoryCategory
+    public class InventoryCategory : BaseEntity
     {
-        public Guid CategoryId { get; set; }
         public string Name { get; set; }
         public IEnumerable<InventoryItem> InventoryItems { get; set; }
     }
