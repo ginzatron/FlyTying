@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Fly : BaseEntity
+    public class Fly : EntityBase
     {
         public string Name { get; set; }
         public AppUser User { get; set; }
