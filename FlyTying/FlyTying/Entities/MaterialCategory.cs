@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class InventoryCategory : BaseEntity
+    public class MaterialCategory : EntityBase
     {
         public string Name { get; set; }
-        public IEnumerable<InventoryItem> InventoryItems { get; set; }
+        public IEnumerable<Material> InventoryItems { get; set; }
     }
 
     // TODO or shoudl I have a base Category class or interface and inventorycategory inherits from it

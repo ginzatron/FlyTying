@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public abstract class BaseEntity
+    public abstract class EntityBase
     {
         public Guid Id { get; set; }
         public DateTime DateCreated { get; set; }

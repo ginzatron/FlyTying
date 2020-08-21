@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class InventoryItem : BaseEntity
+    public class Material : EntityBase
     {
         public string Name { get; set; }
-        public InventoryCategory Category { get; set; }
-        public IEnumerable<InventoryItemOption> ItemOptions { get; set; }
+        public MaterialCategory Category { get; set; }
+        public IEnumerable<MaterialOption> ItemOptions { get; set; }
     }
 }

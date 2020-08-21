@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyMaterial : BaseEntity
+    public class FlyMaterial : EntityBase
     {
         // top two will be mapped from InventoryItem, won't need the category
         // do you need the id or just name? I think we do need the ID for editing purposed on the front so the user can

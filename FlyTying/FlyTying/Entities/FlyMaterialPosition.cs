@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyMaterialPosition : BaseEntity
+    public class FlyMaterialPosition : EntityBase
     {
         public string Position { get; set; } // is this position category?
     }
