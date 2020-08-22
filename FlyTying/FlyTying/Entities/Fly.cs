@@ -9,11 +9,10 @@ namespace FlyTying.Entities
     {
         public string Name { get; set; }
         public AppUser User { get; set; }
-        public FlyCategory FlyCategory { get; set; }
+        public FlyCategory FlyCategory { get => FlyHook.FlyCategory;}
+        public FlyHook FlyHook { get; set; }
+        public FlyThread FlyThread { get; set; }
         public IEnumerable<FlyMaterial> FlyMaterials { get; set; } 
     }
 }
 // TODO have materials save in a tying order, sort order?
-
-// TODO confusion about base entity. how do not use it and still haev generic repository
-//  still don't know how to load all navigational properties autoatically on an entity
