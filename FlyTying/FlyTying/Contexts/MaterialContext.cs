@@ -20,6 +20,6 @@ namespace FlyTying.Contexts
 
         public DbSet<MaterialBase> Materials { get; set; }
         public DbSet<BaseOption> MaterialOptions { get; set; }
-        public DbSet<MaterialCategory> MaterialCategories { get; set; }
+        public DbSet<ItemCategory> MaterialCategories { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class MaterialBase : EntityBase, IItemBase
+    public class HookBase : EntityBase, IItemBase
     {
         public ItemCategory Category { get; set; }
         public IEnumerable<BaseOption> BaseOptions { get; set; }

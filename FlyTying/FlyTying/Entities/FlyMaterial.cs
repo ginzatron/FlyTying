@@ -9,8 +9,7 @@ namespace FlyTying.Entities
     {
         public string Category { get; set; }
         public Guid MaterialBaseId { get; set; } 
-
-        public IEnumerable<FlyMaterialOption> Options { get; set; }
+        public IEnumerable<FlyItemOption> Options { get; set; }
         public HookPosition Position { get; set; }
     }
 }
