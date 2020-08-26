@@ -8,7 +8,7 @@ namespace FlyTying.Entities
     public class FlyItemOption : EntityBase
     {
         // this is a flattened MaterialOption with the selected value
-        public string Title { get; set; }
-        public string Value { get; set; }
+        public string Title { get; set; } // color
+        public string Value { get; set; } // yellow
     }
 }

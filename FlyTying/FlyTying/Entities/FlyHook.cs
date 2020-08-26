@@ -7,10 +7,8 @@ namespace FlyTying.Entities
 {
     public class FlyHook : EntityBase
     {
-        public string Category { get; set; }
         public Guid HookBaseId { get; set; }
-        public IEnumerable<FlyItemOption> Options { get; set; }
-        public FlyCategory FlyCategory { get; set; }
+        public IEnumerable<FlyItemOption> HookOptions { get; set; } // will set, size, fly category wet or nymph etc, and brand?
         public IEnumerable<FlyMaterial> FlyMaterials { get; set; }
     }
 }

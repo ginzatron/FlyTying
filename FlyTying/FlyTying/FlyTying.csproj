@@ -13,11 +13,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Domain\Fly\" />
-    <Folder Include="Domain\Material\" />
-    <Folder Include="Domain\Item\" />
-    <Folder Include="Domain\Hook\" />
-  </ItemGroup>
-
 </Project>

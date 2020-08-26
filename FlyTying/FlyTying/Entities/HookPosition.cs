@@ -7,6 +7,6 @@ namespace FlyTying.Entities
 {
     public class HookPosition : EntityBase
     {
-        public string Position { get; set; } // is this position category?
+        public string Position { get; set; }
     }
 }
