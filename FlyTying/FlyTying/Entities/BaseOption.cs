@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyMaterialOption : EntityBase
+    public class BaseOption : EntityBase
     {
-        // this is a flattened MaterialOption with the selected value
         public string Title { get; set; }
-        public string Value { get; set; }
+        public IEnumerable<BaseOptionValue> OptionValuesList { get; set; } 
     }
 }

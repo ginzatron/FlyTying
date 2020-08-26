@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyMaterialPosition : EntityBase
+    public class BaseOptionValue : EntityBase
     {
-        public string Position { get; set; } // is this position category?
+        public string Value { get; set; }
     }
 }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public interface IMaterial
+    public class HookPosition : EntityBase
     {
-        MaterialCategory Category { get; set; }
+        public string Position { get; set; } // is this position category?
     }
 }

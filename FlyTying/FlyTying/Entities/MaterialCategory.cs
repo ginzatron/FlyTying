@@ -8,6 +8,6 @@ namespace FlyTying.Entities
     public class MaterialCategory : EntityBase
     {
         public string Name { get; set; }
-        public IEnumerable<Material> Materials { get; set; }
+        public IEnumerable<MaterialBase> Materials { get; set; }
     }
 }

@@ -19,6 +19,6 @@ namespace FlyTying.Contexts
         public DbSet<FlyCategory> FlyCategories { get; set; }
         public DbSet<FlyMaterial> FlyMaterials { get; set; }
         public DbSet<FlyMaterialOption> FlyMaterialOptions { get; set; }
-        public DbSet<FlyMaterialPosition> FlyMaterialPositions { get; set; }
+        public DbSet<HookPosition> FlyMaterialPositions { get; set; }
     }
 }

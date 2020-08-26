@@ -7,10 +7,10 @@ namespace FlyTying.Entities
 {
     public class FlyMaterial : EntityBase
     {
-        public string Name { get; set; }
-        public Guid MaterialId { get; set; } 
+        public string Category { get; set; }
+        public Guid MaterialBaseId { get; set; } 
 
-        public FlyMaterialOption MaterialOption { get; set; }
-        public FlyMaterialPosition Position { get; set; }
+        public IEnumerable<FlyMaterialOption> Options { get; set; }
+        public HookPosition Position { get; set; }
     }
 }
