@@ -19,3 +19,8 @@ namespace FlyTying.Entities
 // where to add specific brands in especially for hook
 
 // what to do with all the categories
+
+// can we have the fly category as an option on the hook?
+
+// option Titles are size, weight, color etc maybe brand
+// categories are yarn, hook, hackle etc
