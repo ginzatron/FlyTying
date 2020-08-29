@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class HookPosition : EntityBase
+    public class Image
     {
-        public string Position { get; set; }
+        public string Url { get; set; }
+        public int StepNumber { get; set; }
     }
 }

@@ -15,10 +15,10 @@ namespace FlyTying.Contexts
         {
         }
 
-        public DbSet<Fly> Flies { get; set; }
+        public DbSet<FlyRecipe> Flies { get; set; }
         public DbSet<FlyCategory> FlyCategories { get; set; }
-        public DbSet<FlyMaterial> FlyMaterials { get; set; }
-        public DbSet<FlyMaterialOption> FlyMaterialOptions { get; set; }
+        public DbSet<Ingredient> FlyMaterials { get; set; }
+        public DbSet<IngredientSepcification> FlyMaterialOptions { get; set; }
         public DbSet<HookPosition> FlyMaterialPositions { get; set; }
     }
 }

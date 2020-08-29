@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class HookPosition : EntityBase
+    public class FlySection
     {
-        public string Position { get; set; }
     }
 }

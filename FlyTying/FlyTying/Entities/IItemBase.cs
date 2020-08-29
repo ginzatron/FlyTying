@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class HookPosition : EntityBase
+    public interface IItemBase
     {
-        public string Position { get; set; }
+        ItemCategory Category { get; set; }
+        IEnumerable<BaseOption> BaseOptions { get; set; }
     }
 }
