@@ -7,7 +7,6 @@ namespace FlyTying.Entities
     {
         public string Email { get; set; }
         public string SubjectId { get; set; }
-
-        public IEnumerable<Fly> UserFlys { get; set; }
+        public RecipeBook RecipeBook { get; set; }
     }
 }

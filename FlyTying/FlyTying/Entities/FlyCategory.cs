@@ -8,6 +8,6 @@ namespace FlyTying.Entities
     public class FlyCategory : EntityBase // probably not correct
     {
         public string Name { get; set; }
-        public IEnumerable<Fly> Flies { get; set; } // not sure if this is setup to navigate
+        public IEnumerable<FlyRecipe> Flies { get; set; } // not sure if this is setup to navigate
     }
 }

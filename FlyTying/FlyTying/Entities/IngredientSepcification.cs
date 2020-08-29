@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlyItemOption : EntityBase
+    public class IngredientSepcification : EntityBase
     {
         // this is a flattened MaterialOption with the selected value
         public string Title { get; set; } // color
