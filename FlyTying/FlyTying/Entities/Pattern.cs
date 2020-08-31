@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Pattern : EntityBase // probably not correct
+    public class Pattern : EntityBase
     {
         public string Name { get; set; }
-        public IEnumerable<FlyRecipe> Flies { get; set; } // not sure if this is setup to navigate
+        public IEnumerable<FlyRecipe> Flies { get; set; }
     }
 }

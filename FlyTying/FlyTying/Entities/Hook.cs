@@ -9,7 +9,8 @@ namespace FlyTying.Entities
     {
         public string BrandName { get; set; }
         public string Size { get; set; }
-        public string Eye { get; set; } // down, up, straight
+        public IEnumerable<string> SizeRange { get; set; }
+        public string Eye { get; set; } // down, up, straight, slightly bent
 
         // maybe structure an enum if 1x,2x,3x,4x then add a "modifier" so you know what it's for
         // ie. long/short, heay/fine, strong/weak, wide
@@ -19,19 +20,19 @@ namespace FlyTying.Entities
         // maybe an enum: 1x 2x 3x 4x
 
         // weight is its own class
-        public string Weight { get; set; } // 1x Fine uses wire from one size smaller, 2x heavy, with wire two sizes bigger
+        public string Wire { get; set; } // 1x Fine uses wire from one size smaller, 2x heavy, with wire two sizes bigger
         // denotes a wire strength of a larger hook but on the current hook, ex 1xStrong hook of size #6 will have the wire strength of a #4
         // sometimes referred to with XStrong or XStout
 
-        public string Wire { get; set; } // not sure if this is the same as weight
         public string Gape { get; set; } // comes in standard.  1x wide would have the gape of a standard hook 1 size bigger
         public string Metal { get; set; } // black-nickel, bronze
         public string Point { get; set; } // point, rounded, semi-dropped, dropped
         public string Shank { get; set; } // long, short, curved, straight
         public bool Barb { get; set; }
-        public string GapWidth { get; set; } 
         public string Bend { get; set; } // perfect, reversed, Limerick, sproat, klinkhamer
-        
+
+        public Note Note { get; set; }
+
         // wire gauge table/object, AWG or SWG size then diamter measurements
         //https://en.wikipedia.org/wiki/American_wire_gauge
     }
@@ -44,5 +45,5 @@ namespace FlyTying.Entities
 
     // nymph hooks as standard i assume will have a longer length to begin with?
 
-    // the larger hooks get, the sparser the details
+    // the larger hooks get, the sparser the hook details
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Thread
+    public class Thread : EntityBase
     {
         public string Weight { get; set; } // aught scale 3/0 = 000
         public string Denier { get; set; } // more accurate weight measure, weight in grams of 9k meters of thread
@@ -13,6 +13,7 @@ namespace FlyTying.Entities
         public string Fiber { get; set; } // nylon, silk, polyester, kevlar, GSP? most people use nylon or heavier polyester
         public bool Waxed { get; set; } // everything except, silk kevlar and GSP come waxed
         public string Configuration { get; set; } // round or flat
-        public IEnumerable<IngredientSepcification> ColorOptions { get; set; } // you just a list of string values?
+        public IEnumerable<string> ColorOptions { get; set; } // or should be IngredientSpecifications?
+        public Note Note { get; set; }
     }
 }
