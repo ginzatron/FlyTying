@@ -30,10 +30,6 @@
     <list default="true" id="d3ab2d48-bcce-46db-8da8-9c16a7483026" name="Default Changelist" comment="added nuget packages for EF Core, Tools, sqlserver">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/FlyRecipe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/FlyRecipe.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/Hook.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/Hook.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FlyTying/FlyTying.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/FlyTying.csproj" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="feature/addBaseENtity" />
+        <entry key="$PROJECT_DIR$/.." value="feature/folderOrganizationAndNamespceEdit" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -66,6 +62,8 @@
         <option value="$PROJECT_DIR$/FlyTying/Entities/InventoryCategory.cs" />
         <option value="$PROJECT_DIR$/FlyTying/Entities/InventoryItem.cs" />
         <option value="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" />
+        <option value="$PROJECT_DIR$/FlyTying/Domain/Adhesive.cs" />
+        <option value="$PROJECT_DIR$/FlyTying/Domain/FlyRecipe/FlyRecipe.cs" />
       </list>
     </option>
   </component>
@@ -124,6 +122,7 @@
       <workItem from="1597953618558" duration="4617000" />
       <workItem from="1598891778339" duration="4847000" />
       <workItem from="1598901060845" duration="1321000" />
+      <workItem from="1598908965388" duration="1046000" />
     </task>
     <task id="LOCAL-00001" summary="CreatedOneToMany Relatinoship on FLyCategory to get Flys within category">
       <created>1597848426128</created>
@@ -190,6 +189,10 @@
       <screen x="0" y="0" width="3840" height="1560" />
     </state>
     <state x="1699" y="689" key="Github.CreatePullRequestDialog/0.0.3840.1560/951.1600.1536.824@0.0.3840.1560" timestamp="1597852929100" />
+    <state x="1647" y="483" key="RollbackChangesDialog" timestamp="1598909728570">
+      <screen x="0" y="0" width="3840" height="1560" />
+    </state>
+    <state x="1647" y="483" key="RollbackChangesDialog/0.0.3840.1560/951.1600.1536.824@0.0.3840.1560" timestamp="1598909728570" />
     <state x="1533" y="542" key="Vcs.Push.Dialog.v2" timestamp="1597852909949">
       <screen x="0" y="0" width="3840" height="1560" />
     </state>

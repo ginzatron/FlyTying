@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Adhesive
+    public class Adhesive : EntityBase
     {
+        public Note Note { get; set; }
     }
 }

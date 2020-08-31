@@ -5,7 +5,15 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class FlySection
+    public class FlySection : EntityBase
     {
+
     }
 }
+
+/*
+ * List of FlySection:
+ * Tail, Rib, Body, Thorat, Head, Eyes, Back, Thorax, Hackle
+ * Collar, Cheeks, Weight/Wire, Bead, Legs, Wing, Underwing,
+ * Abdomen, Sheath, Flash, Gills, Body Hackle, Throad Hackle
+ */
