@@ -9,7 +9,7 @@ namespace FlyTying.Entities
     {
         public string Name { get; set; }
         public Hook Hook { get; set; }
-        public Thread Thread { get; set; }
+        public Thread Thread { get; set; } // could be a list?
         public string Description { get; set; }
         public IEnumerable<Equipment> EquipmentList { get; set; }
         public IDictionary<FlySection,Ingredient> SectionIngredients { get; set; }
@@ -20,7 +20,7 @@ namespace FlyTying.Entities
         // something to use a Hackle Guage to match up with gape
     }
     /*
-     * List of positions:
+     * List of FlySection:
      * Tail, Rib, Body, Thorat, Head, Eyes, Back, Thorax, Hackle
      * Collar, Cheeks, Weight/Wire, Bead, Legs, Wing, Underwing,
      * Abdomen, Sheath, Flash, Gills, Body Hackle, Throad Hackle

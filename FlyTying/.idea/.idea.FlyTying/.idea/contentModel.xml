@@ -11,20 +11,6 @@
           <e p="FlyContext.cs" t="Include" />
           <e p="MaterialContext.cs" t="Include" />
         </e>
-        <e p="Domain" t="Include">
-          <e p="Fly" t="Include">
-            <e p="Entities" t="Include" />
-            <e p="Models" t="Include" />
-          </e>
-          <e p="Item" t="Include">
-            <e p="Entities" t="Include" />
-            <e p="Models" t="Include" />
-          </e>
-          <e p="Material" t="Include">
-            <e p="Entities" t="Include" />
-            <e p="Models" t="Include" />
-          </e>
-        </e>
         <e p="Entities" t="Include">
           <e p="Adhesive.cs" t="Include" />
           <e p="AppUser.cs" t="Include" />
