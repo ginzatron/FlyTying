@@ -12,7 +12,7 @@ namespace FlyTying.Entities
         public Thread Thread { get; set; }
         public string Description { get; set; }
         public IEnumerable<Equipment> EquipmentList { get; set; }
-        public IDictionary<FlySection,Ingredient[]> SectionIngredients { get; set; } // ex body, medium peral tinsel ad brown cock hackl
+        public IDictionary<FlySection,Ingredient> SectionIngredients { get; set; }
         public string DifficultyLevel { get; set; } // enum
         public string TargetFishSpecies { get; set; } // possible enum
         public string PatternCategory { get; set; } // emerger, dry, nymph enum

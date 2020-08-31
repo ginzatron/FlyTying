@@ -27,7 +27,14 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3ab2d48-bcce-46db-8da8-9c16a7483026" name="Default Changelist" comment="added nuget packages for EF Core, Tools, sqlserver" />
+    <list default="true" id="d3ab2d48-bcce-46db-8da8-9c16a7483026" name="Default Changelist" comment="added nuget packages for EF Core, Tools, sqlserver">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.FlyTying/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/FlyRecipe.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/FlyRecipe.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/Hook.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/Hook.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FlyTying/FlyTying.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/FlyTying/FlyTying.csproj" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,13 +53,6 @@
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_USER" value="ginzatron" />
     <option name="CREATE_PULL_REQUEST_DEFAULT_REPO_NAME" value="FlyTying" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock://C:/GitHub/FlyTying/FlyTying/FlyTying/Entities/BaseEntity.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/GitHub/FlyTying/FlyTying/FlyTying/Entities/FlyCategory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/GitHub/FlyTying/FlyTying/FlyTying/Entities/InventoryCategory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/GitHub/FlyTying/FlyTying/FlyTying/Entities/InventoryItem.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/FlyTying/Entities/InventoryCategory.cs" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -65,6 +65,7 @@
         <option value="$PROJECT_DIR$/FlyTying/Entities/FlyCategory.cs" />
         <option value="$PROJECT_DIR$/FlyTying/Entities/InventoryCategory.cs" />
         <option value="$PROJECT_DIR$/FlyTying/Entities/InventoryItem.cs" />
+        <option value="$PROJECT_DIR$/FlyTying/Entities/Thread.cs" />
       </list>
     </option>
   </component>
@@ -121,6 +122,8 @@
       <workItem from="1597848250211" duration="4543000" />
       <workItem from="1597869931953" duration="2275000" />
       <workItem from="1597953618558" duration="4617000" />
+      <workItem from="1598891778339" duration="4847000" />
+      <workItem from="1598901060845" duration="1321000" />
     </task>
     <task id="LOCAL-00001" summary="CreatedOneToMany Relatinoship on FLyCategory to get Flys within category">
       <created>1597848426128</created>
