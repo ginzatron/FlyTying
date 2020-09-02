@@ -10,8 +10,7 @@ namespace FlyTying.Entities
         public string MaterialCategory { get; set; } // yarn
         public Guid MaterialBaseId { get; set; } //id
         public IEnumerable<IngredientSepcification> Options { get; set; } // 
-        public int BuildStep { get; set; }
-        public Adhesive Adhesive { get; set; } // thread, glue, cement
-        public Note Instruction { get; set; }
+        public Note Note { get; set; }
+        public Ingredient SubstituteIngredient { get; set; }
     }
 }
