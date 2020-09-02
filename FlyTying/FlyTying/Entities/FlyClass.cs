@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Note : EntityBase
+    public class FlyClass
     {
-        public string Text { get; set; }
+        public string Name { get; set; }
+        IEnumerable<TargetSpecies> TargetSpecies { get; set; }
     }
 }

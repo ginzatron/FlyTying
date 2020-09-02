@@ -8,7 +8,6 @@ namespace FlyTying.Entities
     public class Image
     {
         public string Url { get; set; }
-        public int StepNumber { get; set; }
         public string Description { get; set; }
     }
 }

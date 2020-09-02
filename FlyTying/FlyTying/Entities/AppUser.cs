@@ -7,6 +7,6 @@ namespace FlyTying.Entities
     {
         public string Email { get; set; }
         public string SubjectId { get; set; }
-        public RecipeBook RecipeBook { get; set; }
+        public Guid RecipeBookId { get; set; }
     }
 }

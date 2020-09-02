@@ -8,16 +8,17 @@ namespace FlyTying.Entities
     public class FlyRecipe : EntityBase
     {
         public string Name { get; set; }
+        public Guid AppUserId { get; set; }
         public Hook Hook { get; set; }
-        public Thread Thread { get; set; } // could be a list?
+        public IEnumerable<Thread> Threads { get; set; }
         public Note Description { get; set; }
         public IEnumerable<Equipment> EquipmentList { get; set; }
-        public IDictionary<FlySection,Ingredient> IngredientsList { get; set; }
-        public IEnumerable<Adhesive> Adhesives { get; set; } // possibly equipment
-        public IEnumerable<RecipeDirection> RecipeDirections { get; set; } // need to tie directions to sections and ingredients?
+        public IDictionary<FlySection,Ingredient[]> IngredientsList { get; set; }
+        public IEnumerable<Adhesive> Adhesives { get; set; } // maybe under IEquipment
+        public IEnumerable<RecipeDirection> RecipeDirections { get; set; }
         public string DifficultyLevel { get; set; } // enum
-        public IEnumerable<string> TargetFishSpecies { get; set; } // possible enum
-        public string FlyClass { get; set; } // emerger, dry, nymph enum
+        public IEnumerable<TargetSpecies> TargetFishSpecies { get; set; } // species are going to be filtered by other recipe choices you've made
+        public FlyClass FlyClass { get; set; } // emerger, dry, nymph . should be a class
         public string VideoUrl { get; set; }
     }
 }

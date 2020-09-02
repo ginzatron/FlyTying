@@ -7,8 +7,8 @@ namespace FlyTying.Entities
 {
     public class Hook : EntityBase
     {
-        public string BrandName { get; set; }
-        public string HookClass { get; set; } // dry-fly, standard nymph
+        public string BrandName { get; set; } // i think you define hook specs then see a list of brand options
+        public string HookClass { get; set; } // dry-fly, nymph
         public string Size { get; set; }
         public IEnumerable<string> SizeRange { get; set; }
         public string Eye { get; set; } // down, up, straight, slightly bent
@@ -17,7 +17,7 @@ namespace FlyTying.Entities
         // ie. long/short, heay/fine, strong/weak, wide
 
         // hook length will be it's own class where you denote length, standard, XLong or Xshort
-        public string Length { get; set; } // #12 hook that is 2X Long it will have the wire strength of a #12 but the length of a #8(two sizes bigger)
+        public HookLength Length { get; set; } // #12 hook that is 2X Long it will have the wire strength of a #12 but the length of a #8(two sizes bigger)
         // maybe an enum: 1x 2x 3x 4x
 
         // weight is its own class
@@ -37,6 +37,8 @@ namespace FlyTying.Entities
         // wire gauge table/object, AWG or SWG size then diamter measurements
         //https://en.wikipedia.org/wiki/American_wire_gauge
     }
+
+    // is a lot of this stuff an enumor just table data?
 
     // Dry hooks are usually of standard length but 1x fine
     // nymph hooks are usually 1x long and 1x or 2x heavy

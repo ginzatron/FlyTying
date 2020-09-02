@@ -9,6 +9,9 @@ namespace FlyTying.Entities
     {
         public int StepNumber { get; set; }
         public Image Image { get; set; }
+        public Guid FlySectionId { get; set; }
+        public IEnumerable<Guid> NeededIngredients { get; set; }
+        public Guid AdhesiveId { get; set; }
         public Note Instruction { get; set; }
 
     }
