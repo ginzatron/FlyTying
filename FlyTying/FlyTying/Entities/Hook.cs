@@ -8,6 +8,7 @@ namespace FlyTying.Entities
     public class Hook : EntityBase
     {
         public string BrandName { get; set; }
+        public string HookClass { get; set; } // dry-fly, standard nymph
         public string Size { get; set; }
         public IEnumerable<string> SizeRange { get; set; }
         public string Eye { get; set; } // down, up, straight, slightly bent

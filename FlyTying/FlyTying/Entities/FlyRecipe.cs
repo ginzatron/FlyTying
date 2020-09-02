@@ -13,11 +13,14 @@ namespace FlyTying.Entities
         public Note Description { get; set; }
         public IEnumerable<Equipment> EquipmentList { get; set; }
         public IDictionary<FlySection,Ingredient> IngredientsList { get; set; }
+        public IEnumerable<Adhesive> Adhesives { get; set; } // possibly equipment
+        public IEnumerable<RecipeDirection> RecipeDirections { get; set; } // need to tie directions to sections and ingredients?
         public string DifficultyLevel { get; set; } // enum
-        public string TargetFishSpecies { get; set; } // possible enum
-        public string PatternCategory { get; set; } // emerger, dry, nymph enum
-        public IEnumerable<Image> StepByStepImages { get; set; } // youtube video link?
-        // something to use a Hackle Guage to match up with gape?
+        public IEnumerable<string> TargetFishSpecies { get; set; } // possible enum
+        public string FlyClass { get; set; } // emerger, dry, nymph enum
+        public string VideoUrl { get; set; }
     }
-
 }
+
+// ask a domain expert, are you usually completing the usage of an ingredient in one step?
+// does the order of section/ingredient follow the order the fly is assembled?

@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Entities
 {
-    public class Image
+    public class RecipeDirection
     {
-        public string Url { get; set; }
         public int StepNumber { get; set; }
-        public string Description { get; set; }
+        public Image Image { get; set; }
+        public Note Instruction { get; set; }
+
     }
 }
