@@ -13,4 +13,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Inventory\" />
+    <Folder Include="Domain\Fly\" />
+  </ItemGroup>
+
 </Project>

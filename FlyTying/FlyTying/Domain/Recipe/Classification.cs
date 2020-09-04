@@ -5,9 +5,12 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Supply
+    public enum Classification
     {
-        public string Name { get; set; }
-        public string Note { get; set; }
+        Wet,
+        Dry,
+        Emerger,
+        Nymph,
+        Saltwater
     }
 }

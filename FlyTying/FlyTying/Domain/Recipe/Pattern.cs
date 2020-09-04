@@ -11,7 +11,7 @@ namespace FlyTying.Domain.Recipe
         public string Description { get; set; }
         public IDictionary<Section,Material[]> Anatomy { get; set; }
         public IEnumerable<Species> Targets { get; set; }
-        public string Classification { get; set; } // emerger, dry, nymph . should be a class pattern enum
+        public Classification Classification { get; set; } 
     }
 }
 
