@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyTying.Entities
+namespace FlyTying.Domain.Recipe
 {
-    public class Hook : EntityBase
+    public class Hook : Material
     {
         public string HookClass { get; set; } // dry-fly, nymph
         public string Size { get; set; }
@@ -22,8 +22,7 @@ namespace FlyTying.Entities
         // sometimes referred to with XStrong or XStout
 
         public string Metal { get; set; } // black-nickel, bronze
-        public bool IsForged { get; set; }
-        public Note Note { get; set; }
+        public bool Forged { get; set; }
 
         // wire gauge table/object, AWG or SWG size then diamter measurements
         //https://en.wikipedia.org/wiki/American_wire_gauge

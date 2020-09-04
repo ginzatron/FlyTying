@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyTying.Entities
+namespace FlyTying.Domain.Recipe
 {
-    public class TargetSpecies : EntityBase
+    public class Supply
     {
         public string Name { get; set; }
-        public IEnumerable<FlyClass> TargetedFlies { get; set; }
+        public string Note { get; set; }
     }
 }
