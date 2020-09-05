@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Material : Supply
+    public class Supply
     {
-
+        public string Name { get; set; }
+        public string Note { get; set; }
     }
 }

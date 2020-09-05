@@ -5,8 +5,13 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Material : Supply
+    public enum Bend
     {
-
+        Curved,
+        Perfect,
+        Reversed,
+        Sproat,
+        Scud,
+        Shrimp,
     }
 }

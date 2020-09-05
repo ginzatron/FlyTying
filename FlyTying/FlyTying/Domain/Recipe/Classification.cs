@@ -11,6 +11,19 @@ namespace FlyTying.Domain.Recipe
         Dry,
         Emerger,
         Nymph,
-        Saltwater
+        Saltwater,
+        Salmon,
+        Steelhead,
+        Bass,
+        Streamer,
+
+        Limerick,
     }
 }
+
+/*Where do these go
+ *         Hopper,
+        Terrestrial,
+        Caddis,
+        Egg,
+*/
