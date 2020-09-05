@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Recipe
+    public class Recipe 
     {
-        public Guid RecipeId { get; set; }
+        public Guid Id { get; set; }
         public Hook Hook { get; set; }
         public Thread Thread { get; set; }
         public Tool[] Tools { get; set; }
