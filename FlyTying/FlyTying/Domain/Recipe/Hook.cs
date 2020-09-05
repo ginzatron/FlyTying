@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyTying.Entities
+namespace FlyTying.Domain.Recipe
 {
-    public class Hook : EntityBase
+    public class Hook : Material
     {
-        public string HookClass { get; set; } // dry-fly, nymph
+        public Classification Classification { get; set; } // dry-fly, nymph
         public string Size { get; set; }
         public IEnumerable<string> SizeRange { get; set; }
-        public string Eye { get; set; } // down, up, straight, slightly bent
+        public Eye Eye { get; set; }
+        // could do eye loop
         public Shank Shank { get; set; } // #12 hook that is 2X Long it will have the wire strength of a #12 but the length of a #8(two sizes bigger)
         // maybe an enum: 1x 2x 3x 4x
         public string Bend { get; set; } // perfect, reversed, Limerick, sproat, klinkhamer, curved
@@ -21,9 +22,8 @@ namespace FlyTying.Entities
         // denotes a wire strength of a larger hook but on the current hook, ex 1xStrong hook of size #6 will have the wire strength of a #4
         // sometimes referred to with XStrong or XStout
 
-        public string Metal { get; set; } // black-nickel, bronze
-        public bool IsForged { get; set; }
-        public Note Note { get; set; }
+        public string Metal { get; set; } // black-nickel, bronze, stainless, cadmium
+        public bool Forged { get; set; }
 
         // wire gauge table/object, AWG or SWG size then diamter measurements
         //https://en.wikipedia.org/wiki/American_wire_gauge

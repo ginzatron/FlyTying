@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyTying.Entities
+namespace FlyTying.Domain.Recipe
 {
-    public class Thread : EntityBase
+    public class Thread : Material
     {
         public string Weight { get; set; } // aught scale 3/0 = 000
         public string Denier { get; set; } // more accurate weight measure, weight in grams of 9k meters of thread
@@ -14,6 +14,5 @@ namespace FlyTying.Entities
         public bool Waxed { get; set; } // everything except, silk kevlar and GSP come waxed
         public string Configuration { get; set; } // round or flat
         public IEnumerable<string> ColorOptions { get; set; } // or should be IngredientSpecifications?
-        public Note Note { get; set; }
     }
 }

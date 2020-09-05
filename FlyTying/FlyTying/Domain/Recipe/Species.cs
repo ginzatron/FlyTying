@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FlyTying.Entities
+namespace FlyTying.Domain.Recipe
 {
-    public class TargetSpecies : EntityBase
+    public class Species
     {
         public string Name { get; set; }
-        public IEnumerable<FlyClass> TargetedFlies { get; set; }
+        // will have lots more properties but probably as species in a different namespace?
     }
 }
