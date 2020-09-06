@@ -26,7 +26,7 @@ namespace FlyTying.Application.Interfaces
 
         //T FindOne(Expression<Func<T, bool>> filter);
 
-        Task<T> FindOneAsync(Expression<Func<T, bool>> filterExpression);
+        Task<T> FindOneByFilterAsync(Expression<Func<T, bool>> filterExpression);
 
         //T FindById(string id);
 

@@ -22,28 +22,25 @@ namespace FlyTying.Application.Repositories
             _collection = database.GetCollection<T>(typeof(T).Name);
         }
 
-        public virtual async Task<T> FindOneAsync(Expression<Func<T, bool>> filter)
+        public virtual async Task<T> FindOneByFilterAsync(Expression<Func<T, bool>> filter)
             => await _collection.Find(filter).FirstOrDefaultAsync();
 
         public virtual async Task<T> FindByIdAsync(string id)
-            => await _collection.Find<T>(x => x.Id == stringIdToObjectId(id)).FirstOrDefaultAsync();
+            => await _collection.Find<T>(x => x.Id == id).FirstOrDefaultAsync();
 
         public virtual async Task CreateAsync(T document)
             => await _collection.InsertOneAsync(document);
 
         public virtual async Task UpdateAsync(string id, T document)
-            => await _collection.ReplaceOneAsync<T>(x => x.Id == stringIdToObjectId(id), document);
+            => await _collection.ReplaceOneAsync<T>(x => x.Id == id, document);
 
         public virtual async Task DeleteByIdAsync(string id)
-            =>await _collection.DeleteOneAsync<T>(x => x.Id == stringIdToObjectId(id));
+            =>await _collection.DeleteOneAsync<T>(x => x.Id == id);
 
         public virtual async Task DeleteByFilterAsync(Expression<Func<T, bool>> filter)
             => await _collection.DeleteOneAsync<T>(filter);
 
         public virtual async Task SoftDeleteAsync(string id, T document)
             => await UpdateAsync(id, document);
-
-        private ObjectId stringIdToObjectId(string id)
-            => new ObjectId(id);
     }
 }

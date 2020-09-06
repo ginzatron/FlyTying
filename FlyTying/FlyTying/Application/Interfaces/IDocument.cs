@@ -10,8 +10,8 @@ namespace FlyTying.Application.Interfaces
     public interface IDocument
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
-        ObjectId Id { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        string Id { get; set; }
 
         DateTime CreatedAt { get; }
         DateTime ModifiedAt { get; }
