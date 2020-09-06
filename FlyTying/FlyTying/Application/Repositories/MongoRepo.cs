@@ -31,7 +31,22 @@ namespace FlyTying.Application.Repositories
             return await _collection.Find<T>(x => x.Id == passedId).FirstOrDefaultAsync();
         }
 
+        public virtual async Task CreateAsync(T document)
+            => await _collection.InsertOneAsync(document);
 
+        public virtual async Task UpdateAsync(string id, T document)
+        {
+            var passedId = new ObjectId(id);
+            await _collection.ReplaceOneAsync<T>(x => x.Id == passedId, document);
+        }
 
+        public virtual async Task DeleteByIdAsync(string id)
+        {
+            var passedId = new ObjectId(id);
+            await _collection.DeleteOneAsync<T>(x => x.Id == passedId);
+        }
+
+        public virtual async Task DeleteByFilterAsync(Expression<Func<T, bool>> filter)
+            => await _collection.DeleteOneAsync<T>(filter);
     }
 }

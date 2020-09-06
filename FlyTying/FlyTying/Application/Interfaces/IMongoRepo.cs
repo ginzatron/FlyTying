@@ -34,19 +34,19 @@ namespace FlyTying.Application.Interfaces
 
         //void InsertOne(T document);
 
-        Task InsertOneAsync(T document);
+        Task CreateAsync(T document);
 
         //void InsertMany(ICollection<T> documents);
 
-        Task InsertManyAsync(ICollection<T> documents);
+        // Task InsertManyAsync(ICollection<T> documents);
 
         //void ReplaceOne(T document);
 
-        Task ReplaceOneAsync(T document);
+        Task UpdateAsync(string id, T document);
 
         //void DeleteOne(Expression<Func<T, bool>> filterExpression);
 
-        Task DeleteOneAsync(Expression<Func<T, bool>> filterExpression);
+        Task DeleteByFilterAsync(Expression<Func<T, bool>> filterExpression);
 
         //void DeleteById(string id);
 
@@ -54,6 +54,6 @@ namespace FlyTying.Application.Interfaces
 
         //void DeleteMany(Expression<Func<T, bool>> filterExpression);
 
-        Task DeleteManyAsync(Expression<Func<T, bool>> filterExpression);
+        //Task DeleteManyAsync(Expression<Func<T, bool>> filterExpression);
     }
 }
