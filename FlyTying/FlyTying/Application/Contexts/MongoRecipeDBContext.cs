@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.Contexts
 {
-    public class FlyRecipeContext : IFlyRecipeContext
+    public class MongoRecipeDBContext : IMongoFlyRecipeDBContext
     {
         private readonly MongoClient _client;
         private readonly IMongoDatabase _db;
 
-        public FlyRecipeContext(IOptions<FlyRecipeDatabaseSettings> config)
+        public MongoRecipeDBContext(IOptions<FlyRecipeDatabaseSettings> config)
         {
             _client = new MongoClient(config.Value.ConnectionString);
             _db = _client.GetDatabase(config.Value.DatabaseName);

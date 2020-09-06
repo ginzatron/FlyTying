@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.Interfaces
 {
-    public interface IMongoRepo<T> where T: IDocument
+    public interface IAsyncRepository<T> where T : IDocument
     {
         Task<T> FindByIdAsync(string id);
         Task CreateAsync(T document);
         Task UpdateAsync(string id, T document);
         Task DeleteByIdAsync(string id);
         Task<IEnumerable<T>> Query();
-        Task<IEnumerable<T>> Query(Expression<Func<T,bool>>);
+        Task<IEnumerable<T>> Query(Expression<Func<T,bool>> filter);
         
         
         //IEnumerable<T> GetAll<T>();

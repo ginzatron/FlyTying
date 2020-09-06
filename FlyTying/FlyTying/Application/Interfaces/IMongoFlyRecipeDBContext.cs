@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.Interfaces
 {
-    public interface IFlyRecipeContext
+    public interface IMongoFlyRecipeDBContext
     {
         IMongoCollection<Recipe> GetCollection<Recipe>(string collectionName);
     }
