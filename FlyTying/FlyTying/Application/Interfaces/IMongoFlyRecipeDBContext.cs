@@ -9,6 +9,6 @@ namespace FlyTying.Application.Interfaces
 {
     public interface IMongoFlyRecipeDBContext
     {
-        IMongoCollection<Recipe> GetCollection<Recipe>(string collectionName);
+        IMongoCollection<T> GetCollection<T>(string collectionName);
     }
 }
