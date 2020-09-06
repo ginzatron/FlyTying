@@ -52,6 +52,8 @@ namespace FlyTying.Application.Interfaces
 
         Task DeleteByIdAsync(string id);
 
+        Task SoftDeleteAsync(string id, T document);
+
         //void DeleteMany(Expression<Func<T, bool>> filterExpression);
 
         //Task DeleteManyAsync(Expression<Func<T, bool>> filterExpression);

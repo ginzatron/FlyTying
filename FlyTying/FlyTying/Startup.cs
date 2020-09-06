@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlyTying.Application;
+using FlyTying.Application.Interfaces;
 using FlyTying.Application.Repositories;
 using FlyTying.Entities;
 using Microsoft.AspNetCore.Builder;
@@ -31,7 +32,7 @@ namespace FlyTying
             services.AddSingleton<IFlyRecipeDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FlyRecipeDatabaseSettings>>().Value);
 
-            services.AddSingleton<MongoRepo>();
+            services.AddScoped(typeof(IMongoRepo<>), typeof(MongoRepo<>));
 
             services.AddControllers();
         }
