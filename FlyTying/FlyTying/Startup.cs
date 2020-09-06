@@ -32,9 +32,16 @@ namespace FlyTying
             services.AddSingleton<IFlyRecipeDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<FlyRecipeDatabaseSettings>>().Value);
 
+            services.Configure<FlyRecipeDatabaseSettings>(options =>
+            {
+                options.ConnectionString = Configuration.GetSection("FlyRecipeDatabaseSettings:ConnectionString").Value;
+                options.DatabaseName = Configuration.GetSection("FlyRecipeDatabaseSettings:DatabaseName").Value;
+
+            });
+
             services.AddScoped(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
             services.AddScoped<IRecipeRepository, RecipeRepository>();
-
+            services.AddScoped<IMongoFlyRecipeDBContext, IMongoFlyRecipeDBContext>();
 
             services.AddControllers();
         }

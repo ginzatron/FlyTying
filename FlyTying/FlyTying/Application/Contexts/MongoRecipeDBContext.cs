@@ -16,7 +16,7 @@ namespace FlyTying.Application.Contexts
         public MongoRecipeDBContext(IOptions<FlyRecipeDatabaseSettings> config)
         {
             _client = new MongoClient(config.Value.ConnectionString);
-            _db = _client.GetDatabase(config.Value.DatabaseName);
+            _db = _client.GetDatabase(config.Value.DatabaseName); // both rows move to startup
         }
 
         public IMongoCollection<T> GetCollection<T>(string collectionName)

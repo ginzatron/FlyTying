@@ -7,7 +7,6 @@ namespace FlyTying.Application.Interfaces
 {
     public interface IFlyRecipeDatabaseSettings
     {
-        string RecipeCollectionName { get; set; }
         string ConnectionString { get; set;}
         string DatabaseName { get; set; }
     }
