@@ -12,14 +12,13 @@ namespace FlyTying.Application.Repositories
 {
     public class MongoRepo<T> : IMongoRepo<T> where T: IDocument
     {
-        private readonly IMongoCollection<T> _collection;
+        private IMongoCollection<T> _collection;
+        private readonly IFlyRecipeContext _context;
 
-        public MongoRepo(IFlyRecipeDatabaseSettings settings)
+        public MongoRepo(IFlyRecipeContext context)
         {
-            var client = new MongoClient(settings.ConnectionString); // you want to inject thi
-            var database = client.GetDatabase(settings.DatabaseName);
-
-            _collection = database.GetCollection<T>(typeof(T).Name);
+            _context = context;
+            _collection = _context.GetCollection<T>(typeof(T).Name);
         }
         public virtual async Task<T> FindByIdAsync(string id)
             => await _collection.Find<T>(x => x.Id == id).FirstOrDefaultAsync();
@@ -38,11 +37,5 @@ namespace FlyTying.Application.Repositories
 
         public virtual async Task<IEnumerable<T>> Query()
             => await _collection.Find(FilterDefinition<T>.Empty).ToListAsync();
-
-        //public virtual async Task DeleteByFilterAsync(Expression<Func<T, bool>> filter)
-        //    => await _collection.DeleteOneAsync<T>(filter);
-
-        //public virtual async Task SoftDeleteAsync(string id, T document)
-        //    => await UpdateAsync(id, document);
     }
 }

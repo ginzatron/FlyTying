@@ -13,7 +13,7 @@ namespace FlyTying.Application.Interfaces
         [BsonRepresentation(BsonType.ObjectId)]
         string Id { get; set; }
 
-        DateTime CreatedAt { get; }
-        DateTime ModifiedAt { get; }
+        DateTime CreatedAt { get; set; }
+        DateTime ModifiedAt { get; set; }
     }
 }
