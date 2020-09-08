@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.Repositories
 {
-    public abstract class MongoAsyncRepository<TDocument> : IAsyncRepository<TDocument> where TDocument: IDocument
+    public class MongoAsyncRepository<TDocument> : IAsyncRepository<TDocument> where TDocument : IDocument
     {
         private IMongoCollection<TDocument> _collection;
         private readonly MongoRecipeDBContext _context;
@@ -21,7 +21,11 @@ namespace FlyTying.Application.Repositories
             _context = context;
             _collection = _context.GetCollection<TDocument>(typeof(TDocument).Name); // i don't think i want to set this like this
         }
-        public virtual async Task<TDocument> FindByIdAsync(string id)
+
+        public virtual async Task<IEnumerable<TDocument>> GetAll()
+            => await _collection.Find(FilterDefinition<TDocument>.Empty).ToListAsync();
+
+        public virtual async Task<TDocument> GetByIdAsync(string id)
             => await _collection.Find(Builders<TDocument>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
 
         public virtual async Task CreateAsync(TDocument document)
@@ -35,8 +39,5 @@ namespace FlyTying.Application.Repositories
         
         public virtual async Task<IEnumerable<TDocument>> Query(Expression<Func<TDocument, bool>> filter)
             => await _collection.Find(filter).ToListAsync();
-
-        public virtual async Task<IEnumerable<TDocument>> Query()
-            => await _collection.Find(FilterDefinition<TDocument>.Empty).ToListAsync();
     }
 }

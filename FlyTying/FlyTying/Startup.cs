@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlyTying.Application;
+using FlyTying.Application.Contexts;
 using FlyTying.Application.Interfaces;
 using FlyTying.Application.Repositories;
 using FlyTying.Entities;
@@ -39,8 +40,9 @@ namespace FlyTying
 
             });
 
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
             services.AddScoped<IRecipeRepository, RecipeRepository>();
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
+            services.AddScoped<MongoRecipeDBContext>();
 
             services.AddControllers();
         }
