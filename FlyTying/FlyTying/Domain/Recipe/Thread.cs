@@ -13,6 +13,6 @@ namespace FlyTying.Domain.Recipe
         public string Fiber { get; set; } // nylon, silk, polyester, kevlar, GSP? most people use nylon or heavier polyester
         public bool Waxed { get; set; } // everything except, silk kevlar and GSP come waxed
         public string Configuration { get; set; } // round or flat
-        public IEnumerable<string> ColorOptions { get; set; } // or should be IngredientSpecifications?
+        public string Color { get; set; } // or should be IngredientSpecifications?
     }
 }

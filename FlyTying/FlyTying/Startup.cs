@@ -41,7 +41,6 @@ namespace FlyTying
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
             services.AddScoped<IRecipeRepository, RecipeRepository>();
-            services.AddScoped<IMongoFlyRecipeDBContext, IMongoFlyRecipeDBContext>();
 
             services.AddControllers();
         }
