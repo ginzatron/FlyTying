@@ -16,7 +16,6 @@ namespace FlyTying.Domain.Recipe
         Steelhead,
         Bass,
         Streamer,
-
         Limerick,
     }
 }

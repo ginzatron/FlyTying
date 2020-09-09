@@ -16,6 +16,3 @@ namespace FlyTying.Domain.Recipe
         public Classification Classification { get; set; } 
     }
 }
-
-// ask a domain expert, are you usually completing the usage of an ingredient in one step?
-// does the order of section/ingredient follow the order the fly is assembled?

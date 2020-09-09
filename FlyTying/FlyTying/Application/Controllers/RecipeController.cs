@@ -30,5 +30,25 @@ namespace FlyTying.Application.Controllers
             return Ok(recipes);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateRecipe(Recipe recipe)
+        {
+            await _repository.CreateAsync(recipe);
+            return CreatedAtAction("GetRecipes", new { id = recipe.Id }, recipe);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateRecipe(string id, Recipe recipe)
+        {
+            await _repository.UpdateAsync(id, recipe);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteRecipe(string id)
+        {
+            await _repository.DeleteByIdAsync(id);
+            return Ok();
+        }
     }
 }
