@@ -7,6 +7,6 @@ namespace FlyTying.Domain.Recipe
 {
     public class Tool
     {
-
+        public string Name { get; set; }
     }
 }
