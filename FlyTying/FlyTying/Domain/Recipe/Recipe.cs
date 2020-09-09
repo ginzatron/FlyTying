@@ -20,7 +20,7 @@ namespace FlyTying.Domain.Recipe
         public Instruction[] Instructions { get; set; }
         public Pattern Pattern { get; set; }
 
-        public DateTime CreatedAt { get; set; } 
-        public DateTime ModifiedAt { get; set; }
+        public DateTime CreatedAt { get; set; } // set on Create controller action
+        public DateTime ModifiedAt { get; set; } // set with Update controller action
     }
 }
