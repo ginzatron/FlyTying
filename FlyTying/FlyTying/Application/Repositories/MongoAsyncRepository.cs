@@ -29,10 +29,16 @@ namespace FlyTying.Application.Repositories
             => await _collection.Find(Builders<TDocument>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
 
         public virtual async Task CreateAsync(TDocument document)
-            => await _collection.InsertOneAsync(document);
+        {
+            document.CreatedAt = DateTime.UtcNow;
+            await _collection.InsertOneAsync(document);
+        }
         
         public virtual async Task UpdateAsync(string id, TDocument document)
-            => await _collection.ReplaceOneAsync(Builders<TDocument>.Filter.Eq("_id", document.Id), document);
+        {
+            document.ModifiedAt = DateTime.UtcNow;
+            await _collection.ReplaceOneAsync(Builders<TDocument>.Filter.Eq("_id", document.Id), document);
+        }
         
         public virtual async Task DeleteByIdAsync(string id)
             =>await _collection.DeleteOneAsync(Builders<TDocument>.Filter.Eq("_id", id));
