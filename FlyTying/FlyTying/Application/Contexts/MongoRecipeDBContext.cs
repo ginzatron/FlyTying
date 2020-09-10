@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.Contexts
 {
-    public class MongoRecipeDBContext //: IMongoFlyRecipeDBContext
+    public class MongoRecipeDBContext
     {
         private readonly MongoClient _client;
         private readonly IMongoDatabase _db;
