@@ -19,7 +19,7 @@ namespace FlyTying.Application.Repositories
         public MongoAsyncRepository(MongoRecipeDBContext context)
         {
             _context = context;
-            _collection = _context.GetCollection<TDocument>(typeof(TDocument).Name); // i don't think i want to set this like this
+            _collection = _context.GetCollection<TDocument>(typeof(TDocument).Name);
         }
 
         public virtual async Task<IEnumerable<TDocument>> GetAll()
