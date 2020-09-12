@@ -5,24 +5,21 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public enum Classification
+    public enum HookClassification
     {
-        Wet,
-        Dry,
-        Emerger,
-        Nymph,
-        Saltwater,
-        Salmon,
-        Steelhead,
         Bass,
-        Streamer,
+        Dry,
+        Egg,
+        Emerger,
+        Jig,
         Limerick,
+        Nymph,
+        Salmon,
+        Saltwater,
+        Steelhead,
+        Stinger,
+        Streamer,
+        Tactical,
+        Wet
     }
 }
-
-/*Where do these go
- *         Hopper,
-        Terrestrial,
-        Caddis,
-        Egg,
-*/
