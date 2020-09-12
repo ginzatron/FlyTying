@@ -7,7 +7,7 @@ namespace FlyTying.Domain.Recipe
 {
     public class Hook : Material
     {
-        public Classification Classification { get; set; } // dry-fly, nymph
+        public HookClassification Classification { get; set; } // dry-fly, nymph
         public string Size { get; set; }
         public IEnumerable<string> SizeRange { get; set; }
         public Eye Eye { get; set; }
