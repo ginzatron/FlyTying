@@ -23,10 +23,13 @@ namespace FlyTying.Application.Repositories
         }
 
         public virtual async Task<IEnumerable<TDocument>> GetAll()
-            => await _collection.Find(FilterDefinition<TDocument>.Empty).ToListAsync();
+            => await _collection.Find(Builders<TDocument>.Filter.Empty).ToListAsync();
 
         public virtual async Task<TDocument> GetByIdAsync(string id)
-            => await _collection.Find(Builders<TDocument>.Filter.Eq("_id", id)).FirstOrDefaultAsync();
+        {
+            var filter = Builders<TDocument>.Filter.Eq("_id", id);
+            return await _collection.Find(filter).FirstOrDefaultAsync();
+        }
 
         public virtual async Task CreateAsync(TDocument document)
         {
@@ -36,12 +39,18 @@ namespace FlyTying.Application.Repositories
         
         public virtual async Task UpdateAsync(string id, TDocument document)
         {
+            var filter = Builders<TDocument>.Filter.Eq("_id", id);
+
             document.ModifiedAt = DateTime.UtcNow;
-            await _collection.ReplaceOneAsync(Builders<TDocument>.Filter.Eq("_id", document.Id), document);
+            await _collection.ReplaceOneAsync(filter, document, new ReplaceOptions() { IsUpsert = true});
         }
         
         public virtual async Task DeleteByIdAsync(string id)
-            =>await _collection.DeleteOneAsync(Builders<TDocument>.Filter.Eq("_id", id));
+        {
+            var filter = Builders<TDocument>.Filter.Eq("_id", id);
+
+            await _collection.DeleteOneAsync(filter);
+        }
         
         public virtual async Task<IEnumerable<TDocument>> Query(Expression<Func<TDocument, bool>> filter)
             => await _collection.Find(filter).ToListAsync();
