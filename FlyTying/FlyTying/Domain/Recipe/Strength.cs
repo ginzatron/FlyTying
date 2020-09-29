@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Gap
+    public class Strength
     {
-        public GapWidth Width { get; set; } // wide, narrow
-        public Modifier? Modifier { get; set; } // 1x,2x,3x
+        public HookStrength HookStrength { get; set; }
+        public Modifier? Modifier { get; set; }
     }
 }

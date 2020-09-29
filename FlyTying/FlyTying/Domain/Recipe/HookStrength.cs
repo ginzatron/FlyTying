@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class HookStrength
+    public enum HookStrength
     {
-        public string Strength { get; set; } // fine, heavy, strong, stout
-        public string Modifier { get; set; } // 1x,2x,3x
+        Fine,
+        Heavy,
+        Standard
     }
 }

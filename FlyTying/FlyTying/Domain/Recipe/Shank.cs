@@ -7,7 +7,7 @@ namespace FlyTying.Domain.Recipe
 {
     public class Shank
     {
-        public string Length { get; set; } // standard, long short
-        public string Modifier { get; set; } // 1x,2x,3x
+        public ShankLength Length { get; set; } // standard, long short
+        public Modifier? Modifier { get; set; } // 1x,2x,3x
     }
 }

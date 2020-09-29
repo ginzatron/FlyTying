@@ -8,7 +8,6 @@ namespace FlyTying.Domain.Recipe
     public class Instruction
     {
         public Image Image { get; set; }
-        public Material[] Materials { get; set; }
         public string Description { get; set; }
     }
 }
