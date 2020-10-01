@@ -12,7 +12,7 @@ using MongoDB.Bson.Serialization.Serializers;
 
 namespace FlyTying.Application.Controllers
 {
-    [Route("api/recipe")]
+    [Route("api/recipes")]
     [ApiController]
     public class RecipeController : ControllerBase
     {
@@ -30,6 +30,13 @@ namespace FlyTying.Application.Controllers
             return Ok(recipes);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetRecipe(string id)
+        {
+            var recipe = await _repository.GetByIdAsync(id);
+            return Ok(recipe);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateRecipe(Recipe recipe)
         {
@@ -44,7 +51,7 @@ namespace FlyTying.Application.Controllers
             return Ok();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRecipe(string id)
         {
             await _repository.DeleteByIdAsync(id);
