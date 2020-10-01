@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Strength
+    public enum Strength
     {
-        public HookStrength HookStrength { get; set; }
-        public Modifier? Modifier { get; set; }
+        Standard,
+        OneXHeavy,
+        TwoXHeavy,
+        ThreeXHeavy,
+        OneXFine,
+        TwoXFine,
+        ThreeXFine
     }
 }
