@@ -13,6 +13,7 @@ namespace FlyTying.Domain.Recipe
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string Name { get; set; }
         public Hook Hook { get; set; }
         public Thread Thread { get; set; }
         public Tool[] Tools { get; set; }

@@ -5,9 +5,14 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Domain.Recipe
 {
-    public class Shank
+    public enum Shank
     {
-        public ShankLength Length { get; set; } // standard, long short
-        public Modifier? Modifier { get; set; } // 1x,2x,3x
+        Standard,
+        OneXLong,
+        TwoXLong,
+        ThreeXLong,
+        OneXShort,
+        TwoXShort,
+        ThreeXShort
     }
 }
