@@ -13,12 +13,6 @@
     </header>
 </template>
 
-<script>
-export default {
-
-}
-</script>
-
 <style scoped>
 header {
   display: flex;
@@ -43,6 +37,7 @@ header {
 
 .nav-links li a {
   transition: all 0.3s ease 0s;
+  text-decoration: none;
 }
 
 .nav-links li a:hover {

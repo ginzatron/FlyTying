@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Cors;
 
 namespace FlyTying
 {
@@ -40,6 +41,10 @@ namespace FlyTying
 
             });
 
+            services.AddCors(options => options.AddPolicy("AllowCors",
+                builder => builder.AllowAnyOrigin().WithMethods("GET", "PUT", "POST").AllowAnyHeader())
+);
+
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(MongoAsyncRepository<>));
             services.AddScoped<MongoRecipeDBContext>();
@@ -53,12 +58,14 @@ namespace FlyTying
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+
+            app.UseCors("AllowCors");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

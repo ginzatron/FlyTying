@@ -1,3 +1,3 @@
 <template>
-  <section>YOU ARE HOME</section>
+  <section>NOT FOUND</section>
 </template>
