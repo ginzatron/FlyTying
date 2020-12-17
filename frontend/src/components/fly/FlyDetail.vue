@@ -1,5 +1,7 @@
 <template>
-  <h2>{{ payload.data.name }}</h2>
+  <h2 v-if="payload.loading">LOADING</h2>
+  <h2 v-else-if="!payload.loading && payload.error === ''">{{ payload.data.name }}</h2>
+  <h2 v-if="payload.error !== ''">{{ payload.error }}</h2>
 </template>
 
 <script>
