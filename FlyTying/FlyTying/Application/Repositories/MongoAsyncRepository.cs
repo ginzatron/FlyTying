@@ -27,7 +27,7 @@ namespace FlyTying.Application.Repositories
 
         public virtual async Task<TDocument> GetByIdAsync(string id)
         {
-            var filter = Builders<TDocument>.Filter.Eq("_id", id);
+            var filter = Builders<TDocument>.Filter.Eq("_id", ObjectId.Parse(id));
             return await _collection.Find(filter).FirstOrDefaultAsync();
         }
 
