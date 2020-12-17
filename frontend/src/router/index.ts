@@ -6,22 +6,26 @@ import FlyList from "@/components/fly/FlyList.vue";
 import FlyDetail from "@/components/fly/FlyDetail.vue";
 
 const routes: Array<RouteRecordRaw> = [
-  { 
-    path: "/", 
-    component: Home 
+  {
+    path: "/",
+    name: "Home",
+    component: Home,
   },
-  { 
-    path: "/flys", 
+  {
+    path: "/flys",
+    name: "Flys",
     component: FlyList,
   },
-  { 
-    path: '/flys/:id', 
+  {
+    path: "/flys/:id",
+    name: "Fly",
     component: FlyDetail,
-    props: true 
+    props: true,
   },
-  { 
-    path: "/:notFound(.*)", 
-    component: NotFound 
+  {
+    path: "/:notFound(.*)",
+    name: "NofFound",
+    component: NotFound,
   },
 ];
 
