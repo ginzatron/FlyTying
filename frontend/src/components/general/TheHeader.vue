@@ -1,16 +1,18 @@
 <template>
   <header>
-      <div class="logo">THE VISE LOGO</div>
-      <!-- <div id="g-signin2" data-onsuccess="onSignIn"></div>
+    <div class="logo">
+      <router-link :to="{name: 'Home'}">VISE LOGO</router-link>
+    </div>
+    <!-- <div id="g-signin2" data-onsuccess="onSignIn"></div>
       <a href="#" onclick="signOut();">Sign out</a> -->
-      <nav>
-        <ul class="nav-links">
-          <li id="getFlys"><router-link to="/flys">Flys</router-link></li>
-          <li><a href="#">Create Flys</a></li>
-        </ul>
-      </nav>
-      <a class="button" href="#" type="button">Contact</a>
-    </header>
+    <nav>
+      <ul class="nav-links">
+        <li id="getFlys"><router-link to="/flys">Flys</router-link></li>
+        <li><a href="#">Create Flys</a></li>
+      </ul>
+    </nav>
+    <a class="button" href="#" type="button">Contact</a>
+  </header>
 </template>
 
 <style scoped>
@@ -60,6 +62,10 @@ header {
 
 .flyName .flyClass {
   color: white;
+}
+
+a {
+  text-decoration: none;
 }
 
 .createFlySection {
