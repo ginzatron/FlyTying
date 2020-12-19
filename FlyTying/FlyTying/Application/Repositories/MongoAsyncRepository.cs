@@ -13,7 +13,7 @@ namespace FlyTying.Application.Repositories
 {
     public class MongoAsyncRepository<TDocument> : IAsyncRepository<TDocument> where TDocument : IDocument
     {
-        private IMongoCollection<TDocument> _collection;
+        protected IMongoCollection<TDocument> _collection;
         private readonly MongoRecipeDBContext _context;
 
         public MongoAsyncRepository(MongoRecipeDBContext context)

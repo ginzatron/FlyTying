@@ -57,5 +57,12 @@ namespace FlyTying.Application.Controllers
             await _repository.DeleteByIdAsync(id);
             return Ok();
         }
+
+        [HttpGet("facet")] 
+        public async Task<IActionResult> BuildHookFacets()
+        {
+            var result = await _repository.BuildHookFacets();
+            return Ok(result);
+        }
     }
 }
