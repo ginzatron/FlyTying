@@ -5,22 +5,25 @@
 </template>
 
 <script>
-import { reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 export default {
   props: ["id"],
   setup(props) {
+    const flyId = ref(props.id);
+    const route = useRoute();
     const payload = reactive({
       loading: false,
       error: "",
       data: {},
     });
 
-    async function getFly() {
+    async function getFly(id) {
       payload.loading = true;
       payload.data = {};
       const response = await fetch(
-        `https://localhost:44352/api/recipes/${props.id}`,
+        `https://localhost:44352/api/recipes/${id}`,
         {
           headers: {
             accept: "application/json",
@@ -35,7 +38,13 @@ export default {
       payload.data = data;
     }
 
-    onMounted(getFly);
+    watch (
+      () => route.params, 
+      () => {
+         getFly(route.params.id);}
+    )
+
+    onMounted(getFly(flyId.value));
 
     return {
       payload,

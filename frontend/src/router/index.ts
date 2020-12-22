@@ -15,13 +15,21 @@ const routes: Array<RouteRecordRaw> = [
     path: "/flys",
     name: "Flys",
     component: FlyList,
+    children: [
+      {
+        path: "/:id",
+        name: "Fly",
+        component: FlyDetail,
+        props: true
+      }
+    ]
   },
-  {
-    path: "/flys/:id",
-    name: "Fly",
-    component: FlyDetail,
-    props: true,
-  },
+  // {
+  //   path: "/flys/:id",
+  //   name: "Fly",
+  //   component: FlyDetail,
+  //   props: true,
+  // },
   {
     path: "/:notFound(.*)",
     name: "NotFound",

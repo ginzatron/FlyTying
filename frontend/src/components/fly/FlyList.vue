@@ -2,20 +2,19 @@
   <div v-for="fly in flys" :key="fly.id">
     <!-- should this loop and output a component where the id is passed as a prop -->
     <h3>
-      <router-link :to="buildRoute(fly.id)">{{ fly.name }}</router-link>
+      <router-link :to="{name: 'Fly', params: {id: fly.id}}">{{ fly.name }}</router-link>
       <!-- or should this be a component with the id passed as a prop -->
     </h3>
   </div>
+  <router-view></router-view>
 </template>
 
 <script>
 import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
 
 export default {
   setup() {
     const flys = ref([]);
-    const route = useRoute();
 
     async function getFlys() {
       // should just return objects with name, id from mongo
@@ -30,14 +29,9 @@ export default {
 
     onMounted(getFlys);
 
-    function buildRoute(id) {
-      return `${route.path}/${id}`;
-    }
-
     return {
       flys,
       getFlys,
-      buildRoute,
     };
   },
 };
