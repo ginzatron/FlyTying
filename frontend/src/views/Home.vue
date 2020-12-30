@@ -5,6 +5,9 @@
       <h3>Search by filtering</h3>
       <facet-list></facet-list>
     </div>
+    <div>
+      <fly-list></fly-list>
+    </div>
     <div class="create">
       <button @click="saveNewFly" >Create a new Fly</button>
       <input type="text" v-model="newFly" />
@@ -15,10 +18,12 @@
 <script>
 import { ref } from "vue";
 import FacetList from "@/components/facet/FacetList.vue";
+import FlyList from "@/components/fly/FlyList.vue";
 
 export default {
   components: {
     FacetList,
+    FlyList
   },
   setup() {
     const newFly = ref("");

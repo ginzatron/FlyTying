@@ -1,11 +1,17 @@
 <template>
   <section>
     <facet
-      v-for="facet in facets.data"
+      v-for="facet in facets.available"
       :key="facet.title"
       :name="facet.title"
-      :count="facet.count">
+      :count="facet.count"
+      @matchSearch="matchSearch"
+    >
     </facet>
+    <div v-for="facet in facets.selected" :key="facet.title">
+      {{ facet }}
+      <!-- going to have remove method on click -->
+    </div>
   </section>
 </template>
 
@@ -14,11 +20,20 @@ import { onMounted, reactive } from "vue";
 import Facet from "@/components/facet/Facet.vue";
 
 export default {
-  components: { Facet },
+  components: {
+    Facet,
+  },
   setup() {
     const facets = reactive({
-      data: [],
+      available: [],
+      selected: [],
     });
+
+    async function matchSearch(searchTerm) {
+      console.log(`searching for ${searchTerm}`);
+      facets.selected.push(searchTerm);
+      console.log(facets.selected);
+    }
 
     async function getFacets() {
       const response = await fetch(
@@ -35,14 +50,14 @@ export default {
       for (const key in data) {
         const obj = {
           title: key,
-          items: data[key]
+          items: data[key],
         };
-        for(const key in obj.items){
+        for (const key in obj.items) {
           const facet = {
             title: obj.items[key]._id,
-            count: obj.items[key].count
-          }
-          facets.data.push(facet);
+            count: obj.items[key].count,
+          };
+          facets.available.push(facet);
         }
       }
     }
@@ -52,6 +67,7 @@ export default {
     return {
       getFacets,
       facets,
+      matchSearch,
     };
   },
 };

@@ -27,10 +27,6 @@ export default {
       flys.value = data;
     }
 
-
-
-
-
     onMounted(getFlys);
 
     return {

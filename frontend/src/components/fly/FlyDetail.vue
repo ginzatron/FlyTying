@@ -38,11 +38,10 @@ export default {
       payload.data = data;
     }
 
-    watch (
-      () => route.params, 
-      () => {
-         getFly(route.params.id);}
-    )
+    watch (() => route.params, (newRoute) => {
+      if (newRoute.id)
+        getFly(newRoute.id);
+    });
 
     onMounted(getFly(flyId.value));
 
