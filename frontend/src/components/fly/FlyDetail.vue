@@ -47,7 +47,6 @@ export default {
       payload.data = data;
       console.log(data);
     }
-
     onMounted(getFly(flyId.value));
 
     return {
