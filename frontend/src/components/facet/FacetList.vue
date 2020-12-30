@@ -17,7 +17,7 @@ export default {
   components: { Facet },
   setup() {
     const facets = reactive({
-      data: [{title:'facet1',count:2},{title:'facet2', count:4},{title:'facet3', count:1}],
+      data: [],
     });
 
     async function getFacets() {
@@ -35,13 +35,19 @@ export default {
       for (const key in data) {
         const obj = {
           title: key,
-          count: data[key],
+          items: data[key]
         };
-        facets.data.push(obj);
+        for(const key in obj.items){
+          const facet = {
+            title: obj.items[key]._id,
+            count: obj.items[key].count
+          }
+          facets.data.push(facet);
+        }
       }
     }
 
-    //onMounted(getFacets);
+    onMounted(getFacets);
 
     return {
       getFacets,
