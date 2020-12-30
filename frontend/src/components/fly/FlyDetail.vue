@@ -1,12 +1,21 @@
 <template>
-  <h2 v-if="payload.loading">LOADING</h2>
-  <h2 v-else-if="!payload.loading && payload.error === ''">{{ payload.data.name }}</h2>
-  <h2 v-if="payload.error !== ''">{{ payload.error }}</h2>
+  <div class="fly-content">
+    <h2 v-if="payload.loading">LOADING</h2>
+    <h2 v-else-if="!payload.loading && payload.error === ''">
+      <h3>{{ payload.data.name }}</h3>
+    <div>
+      <h5 v-for="material in payload.data.supplies" :key="material.name">
+        {{material.name}}
+      </h5>
+    </div>
+    </h2>
+    <h2 v-if="payload.error !== ''">{{ payload.error }}</h2>
+  </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { ref, reactive, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   props: ["id"],
@@ -36,12 +45,8 @@ export default {
       const data = await response.json();
       payload.loading = false;
       payload.data = data;
+      console.log(data);
     }
-
-    watch (() => route.params, (newRoute) => {
-      if (newRoute.id)
-        getFly(newRoute.id);
-    });
 
     onMounted(getFly(flyId.value));
 
@@ -52,5 +57,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.fly-content {
+  display: flex;
+  justify-content: center;
+}
 </style>

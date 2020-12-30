@@ -1,12 +1,15 @@
 <template>
-  <div v-for="fly in flys" :key="fly.id">
-    <!-- should this loop and output a component where the id is passed as a prop -->
-    <h3>
-      <router-link :to="{name: 'Fly', params: {id: fly.id}}">{{ fly.name }}</router-link>
-      <!-- or should this be a component with the id passed as a prop -->
-    </h3>
+  <div class="main">
+    <div v-for="fly in flys" :key="fly.id">
+      <!-- should this loop and output a component where the id is passed as a prop -->
+      <h3>
+        <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
+          fly.name
+        }}</router-link>
+        <!-- or should this be a component with the id passed as a prop -->
+      </h3>
+    </div>
   </div>
-  <router-view></router-view>
 </template>
 
 <script>
@@ -37,5 +40,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
 </style>
