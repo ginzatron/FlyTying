@@ -5,15 +5,38 @@
     </div>
     <!-- <div id="g-signin2" data-onsuccess="onSignIn"></div>
       <a href="#" onclick="signOut();">Sign out</a> -->
-    <nav>
+    <!-- <nav>
       <ul class="nav-links">
         <li id="getFlys"><router-link to="/flys">Flys</router-link></li>
         <li><a href="#">Create Flys</a></li>
       </ul>
-    </nav>
+    </nav> -->
+    <div class="create">
+      <button @click="saveNewFly" >Create a new Fly</button>
+      <input type="text" v-model="newFly" />
+    </div>
     <a class="button" href="#" type="button">Contact</a>
   </header>
 </template>
+
+<script>
+import { ref } from "vue";
+
+export default {
+  setup() {
+    const newFly = ref("");
+
+    function saveNewFly() {
+      console.log(`api call to save ${newFly.value}`);
+    }
+
+    return {
+      saveNewFly,
+      newFly,
+    };
+  },
+}
+</script>
 
 <style scoped>
 header {
@@ -21,11 +44,18 @@ header {
   justify-content: flex-end;
   align-items: center;
   padding: 30px 10%;
+  padding-bottom: 90px;
+}
+
+.create {
+  display: flex;
+  flex-direction: column;
 }
 
 .logo {
   cursor: pointer;
   margin-right: auto;
+  margin-left: 80px;
 }
 
 .nav-links {
@@ -60,16 +90,8 @@ header {
   background-color: rgba(0, 136, 169, 0.8);
 }
 
-.flyName .flyClass {
-  color: white;
-}
-
 a {
   text-decoration: none;
 }
 
-.createFlySection {
-  display: flex;
-  justify-content: center;
-}
 </style>
