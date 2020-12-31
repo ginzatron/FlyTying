@@ -16,7 +16,7 @@
 </template>
 
 <script >
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import { useFlys } from '@/composables/useFlys';
 
 export default {

@@ -1,57 +1,32 @@
 <template>
   <div class="fly-content">
-    <h2 v-if="payload.loading">LOADING</h2>
-    <h2 v-else-if="!payload.loading && payload.error === ''">
-      <h3>{{ payload.data.name }}</h3>
+    <h2 v-if="foundFly.loading">LOADING</h2>
+    <h2 v-else-if="!foundFly.loading && foundFly.error === ''">
+      <h3>{{ foundFly.data.name }}</h3>
     <div>
-      <h5 v-for="material in payload.data.supplies" :key="material.name">
+      <h5 v-for="material in foundFly.data.supplies" :key="material.name">
         {{material.name}}
       </h5>
     </div>
     </h2>
-    <h2 v-if="payload.error !== ''">{{ payload.error }}</h2>
+    <h2 v-if="foundFly.error !== ''">{{ foundFly.error }}</h2>
   </div>
 </template>
 
 <script>
-import { ref, reactive, onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useFlys } from '@/composables/useFlys';
 
 export default {
   props: ["id"],
   setup(props) {
+    const {search, foundFly} = useFlys();
     const flyId = ref(props.id);
-    const route = useRoute();
-    const payload = reactive({
-      loading: false,
-      error: "",
-      data: {},
-    });
 
-    // probably just going to filter from the global useFlys store
-    async function getFly(id) {
-      payload.loading = true;
-      payload.data = {};
-      const response = await fetch(
-        `https://localhost:44352/api/recipes/${id}`,
-        {
-          headers: {
-            accept: "application/json",
-          },
-        }
-      );
-      if (!response.ok) {
-        payload.error = "could not complete request";
-      }
-      const data = await response.json();
-      payload.loading = false;
-      payload.data = data;
-      console.log(data);
-    }
-    onMounted(getFly(flyId.value));
+    onMounted(search(flyId.value));
 
     return {
-      payload,
+      foundFly,
     };
   },
 };
