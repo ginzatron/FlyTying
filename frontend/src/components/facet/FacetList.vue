@@ -32,7 +32,6 @@ export default {
     async function matchSearch(searchTerm) {
       console.log(`searching for ${searchTerm}`);
       facets.selected.push(searchTerm);
-      console.log(facets.selected);
     }
 
     async function getFacets() {
@@ -47,19 +46,17 @@ export default {
       let data = await response.json();
       data = JSON.parse(data);
 
-      for (const key in data) {
-        const obj = {
-          title: key,
-          items: data[key],
-        };
-        for (const key in obj.items) {
-          const facet = {
-            title: obj.items[key]._id,
-            count: obj.items[key].count,
-          };
-          facets.available.push(facet);
-        }
+      const facetlist = [];
+      for (const item in data) {
+        facetlist.push(...data[item]);
       }
+
+      facetlist.forEach((facet) => {
+        facets.available.push({
+          title: facet._id,
+          count: facet.count
+        })
+      })
     }
 
     onMounted(getFacets);
