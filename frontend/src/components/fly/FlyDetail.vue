@@ -28,6 +28,7 @@ export default {
       data: {},
     });
 
+    // probably just going to filter from the global useFlys store
     async function getFly(id) {
       payload.loading = true;
       payload.data = {};

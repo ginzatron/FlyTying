@@ -1,6 +1,6 @@
 import {computed, ref} from 'vue';
 
-const flys = ref([]);
+const flys = ref([{}]);
 
 export function useFlys() {
     const loading = ref(false);
@@ -14,8 +14,12 @@ export function useFlys() {
         loading.value = true;
         const data = await response.json();
         loading.value = false;
-        flys.value = data;
-      }
+        flys.value.push(...data);
+    }
+
+    // const filteredPosts = computed((search) => {
+    //     return flys.value.filter((f) => {f.name.contains(search)})
+    // } )
 
     return {
         flys: computed(() => flys.value),
