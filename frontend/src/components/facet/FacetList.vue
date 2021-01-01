@@ -16,7 +16,8 @@
 </template>
 
 <script>
-import { onMounted, reactive } from "vue";
+import { onMounted } from "vue";
+import { useFacets } from '@/composables/useFacets';
 import Facet from "@/components/facet/Facet.vue";
 
 export default {
@@ -24,42 +25,14 @@ export default {
     Facet,
   },
   setup() {
-    const facets = reactive({
-      available: [],
-      selected: [],
-    });
+    const {getFacets, facets} = useFacets();
 
     async function matchSearch(searchTerm) {
       console.log(`searching for ${searchTerm}`);
       facets.selected.push(searchTerm);
     }
 
-    async function getFacets() {
-      const response = await fetch(
-        `https://localhost:44352/api/recipes/facet`,
-        {
-          headers: {
-            accept: "application/json",
-          },
-        }
-      );
-      let data = await response.json();
-      data = JSON.parse(data);
-
-      const facetlist = [];
-      for (const item in data) {
-        facetlist.push(...data[item]);
-      }
-
-      facetlist.forEach((facet) => {
-        facets.available.push({
-          title: facet._id,
-          count: facet.count
-        })
-      })
-    }
-
-    onMounted(getFacets);
+    onMounted(getFacets());
 
     return {
       getFacets,

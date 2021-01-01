@@ -21,8 +21,8 @@ export function useFlys() {
         const data = await response.json();
         loading.value = false;
         
-        for(const item in data) {
-            flys.value.push(data[item]);
+        for(const item of data) {
+            flys.value.push(item);
         }
     }
 
