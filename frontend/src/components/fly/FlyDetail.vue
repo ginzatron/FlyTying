@@ -20,7 +20,7 @@ import { useFlys } from '@/composables/useFlys';
 export default {
   props: ["id"],
   setup(props) {
-    const {search, foundFly} = useFlys();
+    const {flys, search, foundFly} = useFlys();
     const flyId = ref(props.id);
 
     onMounted(search(flyId.value));
