@@ -12,7 +12,7 @@ import FlyList from "@/components/fly/FlyList.vue";
 
 export default {
   components: {
-    FlyList
+    FlyList,
   },
   
 };
@@ -21,9 +21,7 @@ export default {
 <style scoped>
 .main {
   display: flex;
-  justify-content: space-evenly;
-  align-content: center;
+  flex-direction: column;
+  align-items: center;
 }
-
-
 </style>
