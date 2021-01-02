@@ -1,23 +1,28 @@
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 
 const flys = ref([] as any);
 
 export function useFlys() {
   const loading = ref(false);
-  const filteredFlyList = ref([] as any);
+  const nameToSearch = ref('');
   const foundFly = ref({
     loading: false,
     error: "",
     data: {},
   });
-  
-  async function filter(searchTerm: string) {
-    // not sure why this isn't updating when called from filter
-    filteredFlyList.value.push(flys.value.filter((f: any) => f.name.toLowerCase().includes(searchTerm)))
-  }
+
+  const filteredFlyList = computed(() => {
+    if (nameToSearch.value)
+      return flys.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
+    
+    return flys.value;
+  })
+
+  watch(nameToSearch, (newVal) => {
+    nameToSearch.value = newVal;
+  })
 
   async function getFlys() {
-    flys.value = [];
     loading.value = true;
     const response = await fetch(`https://localhost:44352/api/recipes`, {
       headers: {
@@ -30,12 +35,10 @@ export function useFlys() {
     for (const item of data) {
       flys.value.push(item);
     }
-
-    filter('');
   }
 
   // wnat to filter from global store fly list
-  async function search(searchId: string) {
+  async function searchForFly(searchId: string) {
     loading.value = true;
     const response = await fetch(
       `https://localhost:44352/api/recipes/${searchId}`,
@@ -55,7 +58,7 @@ export function useFlys() {
     foundFly: computed(() => foundFly.value),
     filteredFlyList,
     getFlys,
-    search,
-    filter
+    searchForFly,
+    nameToSearch
   };
 }
