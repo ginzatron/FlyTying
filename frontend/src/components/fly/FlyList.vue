@@ -1,7 +1,5 @@
 <template>
-  <div>
-      <input type="search" v-model="nameToSearch">
-  </div>
+  <fly-search @flySearch="search"></fly-search>
   <div v-if="loading">
     <h1>Loading</h1>
   </div>
@@ -21,22 +19,29 @@
 <script >
 import { onMounted } from "vue";
 import { useFlys } from "@/composables/useFlys";
+import FlySearch from './FlySearch.vue';
 
 export default {
   components: {
+    FlySearch,
   },
   setup() {
     const { getFlys, loading, filteredFlyList, nameToSearch } = useFlys();
+
+    function search(searchTerm) {
+      nameToSearch.value = searchTerm;
+    }
 
     onMounted(getFlys);
 
     return {
       loading,
       filteredFlyList,
-      nameToSearch
-    };
-  },
-};
+      nameToSearch,
+      search
+    }
+  }
+}
 </script>
 
 <style scoped>

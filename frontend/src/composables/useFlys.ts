@@ -1,11 +1,11 @@
-import { computed, ref, watch } from "vue";
+import { computed, ref, reactive } from "vue";
 
 const flys = ref([] as any);
 
 export function useFlys() {
   const loading = ref(false);
   const nameToSearch = ref('');
-  const foundFly = ref({
+  const foundFly = reactive({
     loading: false,
     error: "",
     data: {},
@@ -18,11 +18,8 @@ export function useFlys() {
     return flys.value;
   })
 
-  watch(nameToSearch, (newVal) => {
-    nameToSearch.value = newVal;
-  })
-
   async function getFlys() {
+    flys.value = [];
     loading.value = true;
     const response = await fetch(`https://localhost:44352/api/recipes`, {
       headers: {
@@ -37,9 +34,8 @@ export function useFlys() {
     }
   }
 
-  // wnat to filter from global store fly list
   async function searchForFly(searchId: string) {
-    loading.value = true;
+    foundFly.loading = true;
     const response = await fetch(
       `https://localhost:44352/api/recipes/${searchId}`,
       {
@@ -49,13 +45,17 @@ export function useFlys() {
       }
     );
     const data = await response.json();
-    loading.value = false;
-    foundFly.value.data = data;
+    foundFly.loading = false;
+    foundFly.data = data;
   }
+
+  // async function searchForFly(searchId: string) {
+  //   foundFly.value.data = flys.value.find((f: any) => f.id === searchId);
+  // }
 
   return {
     loading: computed(() => loading.value),
-    foundFly: computed(() => foundFly.value),
+    foundFly: computed(() => foundFly),
     filteredFlyList,
     getFlys,
     searchForFly,
