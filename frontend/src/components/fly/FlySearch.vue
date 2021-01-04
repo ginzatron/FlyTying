@@ -1,24 +1,23 @@
 <template>
   <div>
-      <input type="search" v-model="searchTerm" @input="flySearch">
+      <input type="search" v-model="searchTerm">
   </div>
 </template>
 
 <script>
-import {ref} from 'vue';
+import {computed} from 'vue';
 
 export default {
-    emits: ['flySearch'],
-    setup(_,{emit}) {
-        const searchTerm = ref('');
-
-        function flySearch(){
-            emit('flySearch',searchTerm.value);
-        }
+    emits: ['update:modelValue'],
+    props: ['modelValue'],
+    setup(props,{emit}) {
+        const searchTerm = computed({
+            get: () => props.modelValue,
+            set: (value) => emit('update:modelValue', value)
+        })
 
         return {
-            searchTerm,
-            flySearch
+            searchTerm
         }
     }
 }
