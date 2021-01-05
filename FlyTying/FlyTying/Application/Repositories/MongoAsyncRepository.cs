@@ -23,7 +23,9 @@ namespace FlyTying.Application.Repositories
         }
 
         public virtual async Task<IEnumerable<TDocument>> GetAll()
-            => await _collection.Find(Builders<TDocument>.Filter.Empty).ToListAsync();
+        {
+            return await _collection.Find(Builders<TDocument>.Filter.Empty).Project<TDocument>("{Name: 1}").ToListAsync();
+        }
 
         public virtual async Task<TDocument> GetByIdAsync(string id)
         {
