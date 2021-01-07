@@ -14,13 +14,7 @@ export default {
 
 <style scoped>
 .sidenav {
-  width: 200px; /* Set the width of the sidebar */
-  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-  z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
-  left: 0;
-  background-color:white; /* Black */
-  padding-top: 150px;
-  margin-left: 20px;
+  background: blue;
+  width: 100%;
 }
 </style>

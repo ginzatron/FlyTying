@@ -11,11 +11,11 @@
         <li><a href="#">Create Flys</a></li>
       </ul>
     </nav> -->
-    <div class="create">
-      <button @click="saveNewFly" >Create a new Fly</button>
-      <input type="text" v-model="newFly" />
-    </div>
-    <a class="button" href="#" type="button">Contact</a>
+      <div class="create">
+        <button @click="saveNewFly" >Create a new Fly</button>
+        <input type="text" v-model="newFly" />
+      </div>
+      <a class="contact-button" href="#" type="button">Contact</a>
   </header>
 </template>
 
@@ -44,7 +44,8 @@ header {
   justify-content: flex-end;
   align-items: center;
   padding: 30px 10%;
-  padding-bottom: 90px;
+  background: red;
+  width: 100%;
 }
 
 .create {
@@ -58,36 +59,8 @@ header {
   margin-left: 80px;
 }
 
-.nav-links {
-  list-style: none;
-}
-
-.nav-links li {
-  display: inline-block;
-  padding: 0px 20px;
-}
-
-.nav-links li a {
-  transition: all 0.3s ease 0s;
-  text-decoration: none;
-}
-
-.nav-links li a:hover {
-  color: #0088a9;
-}
-
-.button {
-  margin-left: 20px;
-  padding: 9px 25px;
-  background-color: rgba(0, 136, 169, 1);
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease 0s;
-}
-
-.button:hover {
-  background-color: rgba(0, 136, 169, 0.8);
+.contact-button {
+  margin-left: 8px;
 }
 
 a {
