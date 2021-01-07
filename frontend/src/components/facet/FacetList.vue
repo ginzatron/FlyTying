@@ -3,7 +3,7 @@
     <div v-if="loading">
       <h2>Loading</h2>
     </div>
-    <div v-else-if="!loading">
+    <div class="facet-container" v-else-if="!loading">
       <facet
         v-for="facet in facets.available"
         :key="facet.title"
@@ -48,5 +48,9 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.facet-container {
+  display: flex;
+  flex-direction: column;
+}
 </style>

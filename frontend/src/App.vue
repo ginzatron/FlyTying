@@ -1,9 +1,9 @@
 <template>
-  <div class="layout">
+  <div class="container">
     <the-header></the-header>
-    <the-side-bar></the-side-bar>
-    <div class="mainContent">
-      <router-view />
+    <div class="content">
+      <router-view class="main-content" />
+      <the-side-bar class="left-sidebar"></the-side-bar>
     </div>
   </div>
 </template>
@@ -25,5 +25,25 @@ export default {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.main-content {
+  flex: 1;
+}
+
+.left-sidebar {
+  flex: 0 0 12em;
+  order: -1;
 }
 </style>
