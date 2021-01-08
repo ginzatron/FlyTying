@@ -4,10 +4,10 @@
     <h1>Loading</h1>
   </div>
   <div class="main" v-if="!loading">
-    <div v-for="fly in filteredFlyList" :key="fly.id">
+    <div v-for="name in filteredNames" :key="name.id">
       <h3>
-        <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
-          fly.name
+        <router-link :to="{ name: 'Fly', params: { id: name.id } }">{{
+          name.name
         }}</router-link>
       </h3>
     </div>
@@ -24,14 +24,14 @@ export default {
     FlySearch,
   },
   setup() {
-    const { getFlys, loading, filteredFlyList, nameToSearch } = useFlys();
+    const { populateAutoCompleteNames, filteredNames, loading, nameToSearch } = useFlys();
 
-    onMounted(getFlys);
+    onMounted(populateAutoCompleteNames);
 
     return {
       loading,
-      filteredFlyList,
       nameToSearch,
+      filteredNames
     }
   }
 }

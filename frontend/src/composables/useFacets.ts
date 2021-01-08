@@ -1,12 +1,11 @@
 import { ref, reactive, computed } from "vue";
 
-const facets = reactive({
-  available: [] as any,
-  selected: [] as any,
-});
-
 export function useFacets() {
   const loading = ref(false);
+  const facets = reactive({
+    available: [] as any,
+    selected: [] as any,
+  });
 
   async function getFacets() {
     loading.value = true;
@@ -33,8 +32,8 @@ export function useFacets() {
   }
 
   return {
-    getFacets,
     loading: computed(() => loading.value),
+    getFacets,
     facets
   };
 }
