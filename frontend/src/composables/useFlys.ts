@@ -1,25 +1,23 @@
 import { computed, ref, reactive } from "vue";
 
-const flys = ref([] as any);
-
 export function useFlys() {
+  const autoCompleteNames = ref([] as any);
   const loading = ref(false);
   const nameToSearch = ref('');
-  const foundFly = reactive({
+  const fly = reactive({
     loading: false,
     error: "",
     data: {},
   });
 
-  const filteredFlyList = computed(() => {
+  const filteredNames = computed(() => {
     if (nameToSearch.value)
-      return flys.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
+      return autoCompleteNames.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
     
-    return flys.value;
+    return autoCompleteNames.value;
   })
 
-  async function getFlys() {
-    flys.value = [];
+  async function populateAutoCompleteNames() {
     loading.value = true;
     const response = await fetch(`https://localhost:44352/api/recipes`, {
       headers: {
@@ -30,12 +28,12 @@ export function useFlys() {
     loading.value = false;
 
     for (const item of data) {
-      flys.value.push(item);
+      autoCompleteNames.value.push({id: item.id,name: item.name});
     }
   }
 
   async function searchForFly(searchId: string) {
-    foundFly.loading = true;
+    fly.loading = true;
     const response = await fetch(
       `https://localhost:44352/api/recipes/${searchId}`,
       {
@@ -45,8 +43,8 @@ export function useFlys() {
       }
     );
     const data = await response.json();
-    foundFly.loading = false;
-    foundFly.data = data;
+    fly.loading = false;
+    fly.data = data;
   }
 
   // async function searchForFly(searchId: string) {
@@ -55,9 +53,9 @@ export function useFlys() {
 
   return {
     loading: computed(() => loading.value),
-    foundFly: computed(() => foundFly),
-    filteredFlyList,
-    getFlys,
+    fly: computed(() => fly),
+    populateAutoCompleteNames,
+    filteredNames,
     searchForFly,
     nameToSearch
   };
