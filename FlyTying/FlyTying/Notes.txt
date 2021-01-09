@@ -1,0 +1,22 @@
+﻿bucket example
+
+
+
+
+        //private BsonElement BuildHookBucketStage()
+        //{
+        //    return new BsonElement("HookClassification", new BsonArray
+        //    {
+        //        new BsonDocument("$bucket",
+        //            new BsonDocument
+        //            {
+        //                {"groupBy", "$Hook.Classification"},
+        //                {"default", "other"},
+        //                {
+        //                    "output",
+        //                    new BsonDocument("count",
+        //                        new BsonDocument("$sum", 1))
+        //                }
+        //            })
+        //    });
+        //}

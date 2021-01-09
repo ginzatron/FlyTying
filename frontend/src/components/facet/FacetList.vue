@@ -33,7 +33,7 @@ export default {
     const { getFacets, facets, loading } = useFacets();
 
     async function matchSearch(searchTerm) {
-      console.log(`searching for ${searchTerm}`);
+      // call api to execute the match search
       facets.selected.push(searchTerm);
     }
 

@@ -10,5 +10,6 @@ namespace FlyTying.Application.Interfaces
     public interface IRecipeRepository : IAsyncRepository<Recipe>
     {
         Task<string> BuildHookFacets();
+        Task<string> FacetSearch(string facet);
     }
 }
