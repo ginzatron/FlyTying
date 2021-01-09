@@ -34,6 +34,6 @@ export function useFacets() {
   return {
     loading: computed(() => loading.value),
     getFacets,
-    facets
+    facets,
   };
 }
