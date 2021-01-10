@@ -1,24 +1,22 @@
 <template>
   <section>
     <div class="title">
-      <h2 @click="matchSearch">{{ name }} total:<span>{{ count }}</span></h2>
+      <h2 @click="facetSelected">{{ facet }}</h2>
     </div>
   </section>
 </template>
 
 <script>
-import {reactive} from 'vue';
-
 export default {
-  props: ["name", "count"],
+  props: ["facet"],
 
   setup(props,context) {
-    const matchSearch = function () {
-      context.emit('matchSearch',props.name);
+    async function facetSelected() {
+      context.emit('setFacet',props.facet);
     }
 
     return {
-      matchSearch
+      facetSelected
     }
   }
   
