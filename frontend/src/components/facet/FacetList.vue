@@ -3,20 +3,19 @@
     <div v-if="loading">
       <h2>Loading</h2>
     </div>
-    <div class="facet-container" v-else-if="!loading">
+    <div class="facet-container" v-else-if="!loading && facets.selected.length === 0">
       <facet
         v-for="facet in facets.available"
         :key="facet.title"
-        :name="facet.title"
-        :count="facet.count"
-        @matchSearch="matchSearch"
+        :facet="facet.title"
+        @setFacet="updateFacets"
       >
       </facet>
-      <div v-for="facet in facets.selected" :key="facet.title">
-        {{ facet }}
+    </div>
+      <div v-for="facet in facets.selected" :key="facet.title" @click="removeFacet">
+        {{ facet }} is selected
         <!-- going to have remove method on click -->
       </div>
-    </div>
   </section>
 </template>
 
@@ -29,12 +28,20 @@ export default {
   components: {
     Facet,
   },
-  setup() {
+  setup(_,{emit}) {
     const { getFacets, facets, loading } = useFacets();
 
-    async function matchSearch(searchTerm) {
-      // call api to execute the match search
-      facets.selected.push(searchTerm);
+    async function updateFacets(facet) {
+      facets.selected.push(facet);
+      facets.available = facets.available.filter(f => f.title !== facet);
+      emit('searchFacet',facet);
+    }
+
+    async function removeFacet() {
+      facets.selected = [];
+      facets.available = [];
+      emit('resetFacets');
+      getFacets();
     }
 
     onMounted(getFacets());
@@ -42,7 +49,8 @@ export default {
     return {
       facets,
       loading,
-      matchSearch,
+      updateFacets,
+      removeFacet
     };
   },
 };

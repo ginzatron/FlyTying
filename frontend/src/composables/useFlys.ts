@@ -1,9 +1,10 @@
-import { computed, ref, reactive } from "vue";
+import { computed, ref, reactive, watch } from "vue";
 
 export function useFlys() {
-  const autoCompleteNames = ref([] as any);
+  const flyNames = ref([] as any);
   const loading = ref(false);
   const nameToSearch = ref('');
+  const facetsToSearch = ref([] as any);
   const fly = reactive({
     loading: false,
     error: "",
@@ -12,12 +13,12 @@ export function useFlys() {
 
   const filteredNames = computed(() => {
     if (nameToSearch.value)
-      return autoCompleteNames.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
+      return flyNames.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
     
-    return autoCompleteNames.value;
+    return flyNames.value;
   })
 
-  async function populateAutoCompleteNames() {
+  async function getFlys() {
     loading.value = true;
     const response = await fetch(`https://localhost:44352/api/recipes`, {
       headers: {
@@ -28,11 +29,11 @@ export function useFlys() {
     loading.value = false;
 
     for (const item of data) {
-      autoCompleteNames.value.push({id: item.id,name: item.name});
+      flyNames.value.push({id: item.id,name: item.name});
     }
   }
 
-  async function searchForFly(searchId: string) {
+  async function getFly(searchId: string) {
     fly.loading = true;
     const response = await fetch(
       `https://localhost:44352/api/recipes/${searchId}`,
@@ -46,17 +47,27 @@ export function useFlys() {
     fly.loading = false;
     fly.data = data;
   }
-
-  // async function searchForFly(searchId: string) {
-  //   foundFly.value.data = flys.value.find((f: any) => f.id === searchId);
-  // }
-
+  
+  async function searchWithFacets(value: any) {
+    const response = await fetch(`https://localhost:44352/api/recipes/facet/match/?facet=${value}`, {
+      headers: {
+        accept: "application/json",
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+  
+  watch(facetsToSearch.value, (value) => {
+    searchWithFacets(value);
+  })
   return {
     loading: computed(() => loading.value),
     fly: computed(() => fly),
-    populateAutoCompleteNames,
+    getFlys,
     filteredNames,
-    searchForFly,
-    nameToSearch
+    getFly,
+    nameToSearch,
+    facetsToSearch
   };
 }

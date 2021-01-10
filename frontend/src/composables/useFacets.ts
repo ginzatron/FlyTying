@@ -1,4 +1,4 @@
-import { ref, reactive, computed } from "vue";
+import { ref, reactive, computed, watch } from "vue";
 
 export function useFacets() {
   const loading = ref(false);

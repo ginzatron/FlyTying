@@ -1,5 +1,10 @@
 <template>
+
+  <!-- make a search component to house these two items -->
   <fly-search v-model="nameToSearch"></fly-search>
+  <facet-list @searchFacet="matchFacet" @resetFacets="reset"></facet-list>
+  <!-- Remove sidebar possibly -->
+
   <div v-if="loading">
     <h1>Loading</h1>
   </div>
@@ -18,20 +23,32 @@
 import { onMounted } from "vue";
 import { useFlys } from "@/composables/useFlys";
 import FlySearch from '@/components/fly/FlySearch.vue';
+import FacetList from '@/components/facet/FacetList';
 
 export default {
   components: {
     FlySearch,
+    FacetList
   },
   setup() {
-    const { populateAutoCompleteNames, filteredNames, loading, nameToSearch } = useFlys();
+    const { getFlys, filteredNames, loading, nameToSearch, facetsToSearch } = useFlys();
 
-    onMounted(populateAutoCompleteNames);
+    async function matchFacet (facet) {
+      facetsToSearch.value.push(facet);
+    }
+
+    async function reset() {
+      facetsToSearch.value = [];
+    }
+
+    onMounted(getFlys);
 
     return {
       loading,
       nameToSearch,
-      filteredNames
+      filteredNames,
+      matchFacet,
+      reset
     }
   }
 }
