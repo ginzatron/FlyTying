@@ -68,7 +68,7 @@ namespace FlyTying.Application.Controllers
         [HttpGet("facet/match")]
         public async Task<IActionResult> MatchSearch(string facet)
         {
-            var result = await _repository.FacetSearch(facet);
+            var result = await _repository.matchHookClassification(facet);
             return Ok(result);
         }
 

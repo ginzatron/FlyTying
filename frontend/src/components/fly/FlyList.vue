@@ -34,7 +34,10 @@ export default {
     const { getFlys, filteredNames, loading, nameToSearch, facetsToSearch } = useFlys();
 
     async function matchFacet (facet) {
+      console.log(facetsToSearch.value);
+      console.log(`addding ${facet} to search`);
       facetsToSearch.value.push(facet);
+      console.log(facetsToSearch.value);
     }
 
     async function reset() {

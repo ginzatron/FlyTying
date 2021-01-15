@@ -20,23 +20,31 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<string> FacetSearch(string facet)
+        public async Task<string> matchHookClassification(string facet)
         {
-            var options = new AggregateOptions()
-            {
-                AllowDiskUse = false,
-                Collation = new Collation(
-                "en_US"
-            )};
+            //var options = new AggregateOptions()
+            //{
+            //    AllowDiskUse = false,
+            //    Collation = new Collation(
+            //    "en_US"
+            //)
+            //};
 
-            PipelineDefinition<Recipe, BsonDocument> temp = new BsonDocument[]
-{
-                new BsonDocument("$match",
-                new BsonDocument("Hook.Classification", facet))
-            };
+            //PipelineDefinition<Recipe, BsonDocument> temp = new BsonDocument[]
+            //{
+            //    new BsonDocument("$match",
+            //    new BsonDocument("Hook.Classification", facet))
+            //};
 
-            var aggregation = _collection.Aggregate(temp);
-            return aggregation.Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+            //var aggregation = _collection.Aggregate(temp, options);
+            //return aggregation.Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+
+            var facetAsEnumvalue = (HookClassification)Enum.Parse(typeof(HookClassification), facet);
+
+            var pipeline = _collection.Aggregate()
+                .Match(x => x.Hook.Classification == facetAsEnumvalue);
+
+            return pipeline.ToList().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true});
         }
 
         public async Task<string> BuildHookFacets()
