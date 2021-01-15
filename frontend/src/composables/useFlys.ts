@@ -58,9 +58,12 @@ export function useFlys() {
     console.log(data);
   }
   
+  // why does this need to be .value
   watch(facetsToSearch.value, (value) => {
+    console.log('inwatcher');
     searchWithFacets(value);
   })
+
   return {
     loading: computed(() => loading.value),
     fly: computed(() => fly),

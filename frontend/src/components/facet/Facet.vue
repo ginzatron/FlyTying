@@ -1,22 +1,29 @@
 <template>
   <section>
-    <div class="title">
-      <h2 @click="facetSelected">{{ facet }}</h2>
+    <div class="title" >
+      <h2 @click="facetSelected" :class="{selected: isSelected}">{{ facet }}</h2>
     </div>
   </section>
 </template>
 
 <script>
+import {ref} from 'vue';
+
 export default {
-  props: ["facet"],
+  props: ["facet","selected"],
+  emits: ['facetSelected'],
 
   setup(props,context) {
+    const isSelected = ref(props.selected);
+
     async function facetSelected() {
-      context.emit('setFacet',props.facet);
+      //isSelected.value = !isSelected.value;
+      context.emit('facetSelected',props.facet);
     }
 
     return {
-      facetSelected
+      facetSelected,
+      isSelected
     }
   }
   
@@ -24,4 +31,9 @@ export default {
 </script>
 
 <style scoped>
+
+.selected {
+  color: blueviolet;
+}
+
 </style>
