@@ -8,11 +8,11 @@
       v-else-if="!loading"
     >
       <facet
-        v-for="facet in facets.list"
+        v-for="facet in selectableList"
         :key="facet.title"
         :facet="facet.title"
-        :selected="facet.isSelected"
-        @facetSelected="setSelectedFacet"
+        v-model="facet.isSelected"
+        @update="setSelectedFacet"
       >
       </facet>
     </div>
@@ -22,7 +22,7 @@
 <script>
 import { onMounted } from "vue";
 import { useFacets } from "@/composables/useFacets";
-import {ref, reactive, watch} from 'vue';
+import {ref, watch} from 'vue';
 import Facet from "@/components/facet/Facet.vue";
 
 export default {
@@ -31,19 +31,34 @@ export default {
   },
   setup() {
     const loading = ref(false);
-    const facets = reactive({
-      list: []
-    });
+    const facets = [];
     const selectedFacet = ref('');
+    const selectableList = ref([]);
 
     const { getFacets} = useFacets();
 
+    async function setSelectedFacet(facet) {
+      if (facet === selectedFacet.value)
+        selectedFacet.value = '';
+      else
+        selectedFacet.value = facet;
+    }
+    
+    watch(selectedFacet, (newValue) => {
+      selectableList.value = [];
+      selectableList.value = facets.map((f) =>  {
+        if (f.title !== newValue)
+          f.isSelected = false;
+        else 
+          f.isSelected = true;
+        return f;
+      })
+    })
+
     async function createFacets(){
-        loading.value = true;
+      loading.value = true;
         const facetList = await getFacets();
         loading.value = false;
-
-        console.log(facetList);
 
         facetList.forEach((facet) => {
           const newFacet = {
@@ -51,38 +66,19 @@ export default {
             count: facet.count,
             isSelected: false
           }
-          facets.list.push(newFacet);
+          facets.push(newFacet);
         })
+        selectableList.value = facets;
     }
     
-    async function setSelectedFacet(facet) {
-      if (facet === selectedFacet.value)
-        selectedFacet.value = '';
-      else
-        selectedFacet.value = facet;
-    }
-
-    watch(selectedFacet, (newValue) => {
-      console.log(`here with ${newValue}`);
-      facets.list = facets.list.map((f) =>  {
-        if (f.title !== newValue)
-          f.isSelected = false;
-         else 
-          f.isSelected = true;
-        return f;
-      })
-    })
-
-    // why is facets.list not dictating the class on the facet component?
-
-      //emit("searchFacet", facet);
 
     onMounted(createFacets());
 
+    //emit("searchFacet", facet);
     return {
-      facets,
       setSelectedFacet,
-      loading
+      loading,
+      selectableList
     };
   },
 };
