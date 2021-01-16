@@ -1,29 +1,35 @@
 <template>
   <section>
     <div class="title" >
-      <h2 @click="facetSelected" :class="{selected: isSelected}">{{ facet }}</h2>
+      <label :class="{selected: facetSelected}">{{ facetName }}</label>
+      <input type="checkbox" v-model="facetSelected" @input="updateSelectedFacet">
     </div>
   </section>
 </template>
 
 <script>
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 
 export default {
-  props: ["facet","selected"],
-  emits: ['facetSelected'],
+  props: ["facet","modelValue"],
+  emits: ['update:modelValue','update'],
 
-  setup(props,context) {
-    const isSelected = ref(props.selected);
+  setup(props,{emit}) {
+    const facetName = ref(props.facet);
 
-    async function facetSelected() {
-      //isSelected.value = !isSelected.value;
-      context.emit('facetSelected',props.facet);
+    const facetSelected = computed({
+      get: () => props.modelValue,
+      set: (value) => emit('update:modelValue',value)
+    });
+
+    async function updateSelectedFacet() {
+      emit('update',facetName);
     }
 
     return {
       facetSelected,
-      isSelected
+      facetName,
+      updateSelectedFacet
     }
   }
   

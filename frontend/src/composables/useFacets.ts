@@ -1,4 +1,5 @@
 export function useFacets() {
+
   async function getFacets() {
     const response = await fetch(`https://localhost:44352/api/recipes/facet`, {
       headers: {
@@ -19,4 +20,5 @@ export function useFacets() {
   return {
     getFacets,
   };
+  
 }
