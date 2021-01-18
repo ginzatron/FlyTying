@@ -10,6 +10,6 @@ namespace FlyTying.Application.Interfaces
     public interface IRecipeRepository : IAsyncRepository<Recipe>
     {
         Task<string> BuildHookFacets();
-        Task<string> matchHookClassification(string facet);
+        Task<IEnumerable<Recipe>> matchHookClassification(string facet);
     }
 }

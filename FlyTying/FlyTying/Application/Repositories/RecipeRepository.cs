@@ -20,35 +20,17 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<string> matchHookClassification(string facet)
+        public async Task<IEnumerable<Recipe>> matchHookClassification(string facet)
         {
-            //var options = new AggregateOptions()
-            //{
-            //    AllowDiskUse = false,
-            //    Collation = new Collation(
-            //    "en_US"
-            //)
-            //};
-
-            //PipelineDefinition<Recipe, BsonDocument> temp = new BsonDocument[]
-            //{
-            //    new BsonDocument("$match",
-            //    new BsonDocument("Hook.Classification", facet))
-            //};
-
-            //var aggregation = _collection.Aggregate(temp, options);
-            //return aggregation.Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
-
             var facetAsEnumvalue = (HookClassification)Enum.Parse(typeof(HookClassification), facet);
 
-            var pipeline = _collection.Aggregate()
-                .Match(x => x.Hook.Classification == facetAsEnumvalue);
-
-            return pipeline.ToList().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true});
+            return _collection.Aggregate()
+                .Match(x => x.Hook.Classification == facetAsEnumvalue).ToList();
         }
 
         public async Task<string> BuildHookFacets()
         {
+            // need to make a Facet class that gets returned as a list of Facets and return that aggregation step as opposed to aggregation.Single...
             var options = new AggregateOptions()
             {
                 AllowDiskUse = false,
@@ -59,7 +41,7 @@ namespace FlyTying.Application.Repositories
             var pipeline = BuildPipeline();
 
             //var facetPipeline = AggregateFacet.Create("HookFacets", pipeline);
-            var aggregation = _collection.Aggregate(pipeline, options);
+            var aggregation =  await _collection.Aggregate(pipeline, options).ToListAsync();
 
             return aggregation.Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
         }
