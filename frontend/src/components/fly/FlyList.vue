@@ -1,10 +1,6 @@
 <template>
-
-  <!-- make a search component to house these two items -->
   <fly-search v-model="nameToSearch"></fly-search>
-  <facet-list @searchFacet="matchFacet" @resetFacets="reset"></facet-list>
-  <!-- Remove sidebar possibly -->
-
+  <facet-list @searchFacet="matchFacet"></facet-list>
   <div v-if="loading">
     <h1>Loading</h1>
   </div>
@@ -31,17 +27,10 @@ export default {
     FacetList
   },
   setup() {
-    const { getFlys, filteredNames, loading, nameToSearch, facetsToSearch } = useFlys();
+    const { getFlys, filteredNames, loading, nameToSearch } = useFlys();
 
-    async function matchFacet (facet) {
-      console.log(facetsToSearch.value);
-      console.log(`addding ${facet} to search`);
-      facetsToSearch.value.push(facet);
-      console.log(facetsToSearch.value);
-    }
-
-    async function reset() {
-      facetsToSearch.value = [];
+    async function matchFacet(facet) {
+      getFlys(facet.value);
     }
 
     onMounted(getFlys);
@@ -51,7 +40,6 @@ export default {
       nameToSearch,
       filteredNames,
       matchFacet,
-      reset
     }
   }
 }

@@ -29,7 +29,7 @@ export default {
   components: {
     Facet,
   },
-  setup() {
+  setup(_,{emit}) {
     const loading = ref(false);
     const facets = [];
     const selectedFacet = ref('');
@@ -38,7 +38,7 @@ export default {
     const { getFacets} = useFacets();
 
     async function setSelectedFacet(facet) {
-      if (facet === selectedFacet.value)
+      if (facet.value === selectedFacet.value.value)
         selectedFacet.value = '';
       else
         selectedFacet.value = facet;
@@ -52,7 +52,8 @@ export default {
         else 
           f.isSelected = true;
         return f;
-      })
+      });
+      emit("searchFacet", selectedFacet.value);
     })
 
     async function createFacets(){
@@ -70,11 +71,9 @@ export default {
         })
         selectableList.value = facets;
     }
-    
 
     onMounted(createFacets());
 
-    //emit("searchFacet", facet);
     return {
       setSelectedFacet,
       loading,

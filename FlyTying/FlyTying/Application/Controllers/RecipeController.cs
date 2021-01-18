@@ -24,8 +24,15 @@ namespace FlyTying.Application.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRecipes()
+        public async Task<IActionResult> GetRecipes(string facet)
         {
+            // should take parameter with default value and both go to the same search?
+            // override GetAll
+            if (facet != null)
+            {
+                var result = await _repository.matchHookClassification(facet);
+                return Ok(result);
+            }
             var recipes = await _repository.GetAll();
             return Ok(recipes);
         }
@@ -42,7 +49,7 @@ namespace FlyTying.Application.Controllers
         {
             await _repository.CreateAsync(recipe);
             return CreatedAtAction("GetRecipes", new { id = recipe.Id }, recipe);
-        }
+        }   
 
         [HttpPut]
         public async Task<IActionResult> UpdateRecipe(string id, Recipe recipe)
@@ -67,7 +74,7 @@ namespace FlyTying.Application.Controllers
 
         [HttpGet("facet/match")]
         public async Task<IActionResult> MatchSearch(string facet)
-        {
+         {
             var result = await _repository.matchHookClassification(facet);
             return Ok(result);
         }

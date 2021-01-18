@@ -4,7 +4,6 @@ export function useFlys() {
   const flyNames = ref([] as any);
   const loading = ref(false);
   const nameToSearch = ref('');
-  const facetsToSearch = ref([] as any);
   const fly = reactive({
     loading: false,
     error: "",
@@ -18,9 +17,10 @@ export function useFlys() {
     return flyNames.value;
   })
 
-  async function getFlys() {
+  async function getFlys(facet = "") {
+    flyNames.value = [];
     loading.value = true;
-    const response = await fetch(`https://localhost:44352/api/recipes`, {
+    const response = await fetch(`https://localhost:44352/api/recipes?facet=${facet}`, {
       headers: {
         accept: "application/json",
       },
@@ -47,22 +47,6 @@ export function useFlys() {
     fly.loading = false;
     fly.data = data;
   }
-  
-  async function searchWithFacets(value: any) {
-    const response = await fetch(`https://localhost:44352/api/recipes/facet/match/?facet=${value}`, {
-      headers: {
-        accept: "application/json",
-      },
-    });
-    const data = await response.json();
-    console.log(data);
-  }
-  
-  // why does this need to be .value
-  watch(facetsToSearch.value, (value) => {
-    console.log('inwatcher');
-    searchWithFacets(value);
-  })
 
   return {
     loading: computed(() => loading.value),
@@ -71,6 +55,5 @@ export function useFlys() {
     filteredNames,
     getFly,
     nameToSearch,
-    facetsToSearch
   };
 }
