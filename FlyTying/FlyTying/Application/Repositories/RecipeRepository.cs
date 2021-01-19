@@ -30,35 +30,27 @@ namespace FlyTying.Application.Repositories
 
         public async Task<string> BuildHookFacets()
         {
-            // need to make a Facet class that gets returned as a list of Facets and return that aggregation step as opposed to aggregation.Single...
-            var options = new AggregateOptions()
+            var sortByCount = new BsonElement("HookClassification", new BsonArray
+                {
+                    new BsonDocument
+                    {
+                        {"$sortByCount", "$Hook.Classification" }
+                    }
+                }
+            );
+
+            var facetState = new BsonDocument("$facet", new BsonDocument()
             {
-                AllowDiskUse = false,
-                Collation = new Collation(
-                "en_US"
-            )};
+                sortByCount
+            });
 
-            var pipeline = BuildPipeline();
+            var pipeline = new[]
+            {
+                facetState
+            };
 
-            //var facetPipeline = AggregateFacet.Create("HookFacets", pipeline);
-            var aggregation =  await _collection.Aggregate(pipeline, options).ToListAsync();
-
-            return aggregation.Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
-        }
-
-        private PipelineDefinition<Recipe, BsonDocument> BuildPipeline()
-        {
-             return new BsonDocument[]
-             {
-                new BsonDocument("$facet",new BsonDocument()
-                        .Add("HookClassification", new BsonArray()
-                                .Add
-                                (
-                                    new BsonDocument().Add("$sortByCount", "$Hook.Classification") // eq. "HookClassification": [{$sortByCount:"$Hook.Classification"}]
-                                )
-                            )
-                        )
-              };
+            return _collection.Aggregate(PipelineDefinition<Recipe, BsonDocument>.Create(pipeline))
+                .Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
         }
     }
 }
