@@ -57,14 +57,14 @@ export default {
     })
 
     async function createFacets(){
-      loading.value = true;
+        loading.value = true;
         const facetList = await getFacets();
         loading.value = false;
 
         facetList.forEach((facet) => {
           const newFacet = {
-            title: facet._id,
-            count: facet.count,
+            title: facet.Name,
+            count: facet.Count,
             isSelected: false
           }
           facets.push(newFacet);
