@@ -1,7 +1,7 @@
-import { computed, ref, reactive, watch } from "vue";
+import { computed, ref, reactive } from "vue";
 
 export function useFlys() {
-  const flyNames = ref([] as any);
+  const flys = ref([] as any);
   const loading = ref(false);
   const nameToSearch = ref('');
   const fly = reactive({
@@ -12,13 +12,13 @@ export function useFlys() {
 
   const filteredNames = computed(() => {
     if (nameToSearch.value)
-      return flyNames.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
+      return flys.value.filter((f: any) => f.name.toLowerCase().includes(nameToSearch.value));
     
-    return flyNames.value;
+    return flys.value;
   })
 
   async function getFlys(facet = "") {
-    flyNames.value = [];
+    flys.value = [];
     loading.value = true;
     const response = await fetch(`https://localhost:44352/api/recipes?facet=${facet}`, {
       headers: {
@@ -27,10 +27,7 @@ export function useFlys() {
     });
     const data = await response.json();
     loading.value = false;
-
-    for (const item of data) {
-      flyNames.value.push({id: item.id,name: item.name});
-    }
+    flys.value = data;
   }
 
   async function getFly(searchId: string) {

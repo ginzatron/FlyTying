@@ -30,34 +30,10 @@ namespace FlyTying.Application.Repositories
 
         public async Task<string> BuildHookFacets()
         {
-            var options = new AggregateOptions()
-            {
-                AllowDiskUse = false,
-                Collation = new Collation(
-               "en_US"
-           )};
-
-            var sortByCount = new BsonElement("HookClassification", new BsonArray
-                {
-                    new BsonDocument
-                    {
-                        {"$sortByCount", "$Hook.Classification" }
-                    }
-                }
-            );
-
-            var facetState = new BsonDocument("$facet", new BsonDocument()
-            {
-                sortByCount
-            });
-
-            var pipeline = new[]
-            {
-                facetState
-            };
-
-            return _collection.Aggregate(PipelineDefinition<Recipe, BsonDocument>.Create(pipeline),options)
-                .Single().ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+            return _collection.AsQueryable().GroupBy(x => x.Hook.Classification)
+                .Select(g => new { Name = g.Key, Count = g.Count() })
+                .ToList()
+                .ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
         }
     }
 }

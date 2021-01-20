@@ -9,12 +9,7 @@ export function useFacets() {
     let data = await response.json();
     data = JSON.parse(data);
 
-    const facetlist = [];
-    for (const item in data) {
-      facetlist.push(...data[item]);
-    }
-
-    return facetlist;
+    return data;
   }
 
   return {
