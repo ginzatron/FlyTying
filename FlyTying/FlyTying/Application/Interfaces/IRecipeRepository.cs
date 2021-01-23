@@ -1,4 +1,6 @@
-﻿using FlyTying.Domain.Recipe;
+﻿using FlyTying.Application.Facet;
+using FlyTying.Application.FacetSearch;
+using FlyTying.Domain.Recipe;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,6 @@ namespace FlyTying.Application.Interfaces
     public interface IRecipeRepository : IAsyncRepository<Recipe>
     {
         Task<string> BuildHookFacets();
-        Task<IEnumerable<Recipe>> matchHookClassification(string facet);
+        Task<IEnumerable<Recipe>> matchHookClassification(IDictionary<string, string[]> facets);
     }
 }

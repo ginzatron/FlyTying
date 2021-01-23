@@ -28,11 +28,11 @@ namespace FlyTying.Application.Controllers
         {
             // should take parameter with default value and both go to the same search?
             // override GetAll
-            if (facet != null)
-            {
-                var result = await _repository.matchHookClassification(facet);
-                return Ok(result);
-            }
+            //if (facet != null)
+            //{
+            //    var result = await _repository.matchHookClassification(facet);
+            //    return Ok(result);
+            //}
             var recipes = await _repository.GetAll();
             return Ok(recipes);
         }
@@ -68,7 +68,12 @@ namespace FlyTying.Application.Controllers
         [HttpGet("facet")] 
         public async Task<IActionResult> BuildHookFacets()
         {
-            var result = await _repository.BuildHookFacets();
+            var facetList = new Dictionary<string, string[]>();
+            facetList["patterns"] = new string[] { "Steelhead", "Hopper" };
+            facetList["patternNames"] = new string[] { "RibHaresEar2", "RoyalWulff1" };
+            facetList["hookClassification"] = new string[] { "Nymph", "Jig" };
+
+            var result = await _repository.matchHookClassification(facetList);
             return Ok(result);
         }
     }

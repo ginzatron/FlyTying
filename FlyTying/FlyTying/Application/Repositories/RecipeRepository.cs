@@ -1,4 +1,6 @@
 ﻿using FlyTying.Application.Contexts;
+using FlyTying.Application.Facet;
+using FlyTying.Application.FacetSearch;
 using FlyTying.Application.Interfaces;
 using FlyTying.Domain.Recipe;
 using MongoDB.Bson;
@@ -20,30 +22,40 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Recipe>> matchHookClassification(string facet) // this will be an object with keys for facetTypes: array selected facets within that type
+        public async Task<IEnumerable<Recipe>> matchHookClassification(IDictionary<string, string[]> facets) 
         {
-            var facetAsEnumvalue = (HookClassification)Enum.Parse(typeof(HookClassification), facet);
+            var filter = Builders<Recipe>.Filter.Empty;
 
-            return _collection.Aggregate()
-                .Match(x => x.Hook.Classification == facetAsEnumvalue).ToList();
+            if (facets.ContainsKey("patterns"))
+            {
+                var patternArray = facets["patterns"].Select(x => (PatternType)Enum.Parse(typeof(PatternType), x));
+                var patternFilter = Builders<Recipe>.Filter.In(x => x.Pattern.PatternType, patternArray);
+                filter &= patternFilter;
+            }
+
+            if (facets.ContainsKey("hookClassification"))
+            {
+                var hookArray = facets["hookClassification"].Select(x => (HookClassification)Enum.Parse(typeof(HookClassification), x));
+                var hookClassFilter = Builders<Recipe>.Filter.In(x => x.Hook.Classification, hookArray);
+                filter &= hookClassFilter;
+            }
+
+            if (facets.ContainsKey("patternNames"))
+            {
+                var patternNameFilter = Builders<Recipe>.Filter.In(x => x.Pattern.Name, facets["patternNames"]);
+                filter &= patternNameFilter;
+            }
+
+            var temp = await _collection.Aggregate().Match(filter).ToListAsync();
+            return temp;
         }
 
         public async Task<string> BuildHookFacets()
         {
-            var typeFilter = Builders<Recipe>.Filter.Eq(x => (PatternType)x.Pattern.PatternType,  PatternType.Steelhead);
-            var nameFilter = Builders<Recipe>.Filter.Eq(x => x.Name, "RoyalWulff");
-            var temp = _collection.Aggregate().Match(nameFilter | typeFilter).ToList();
-
-
             return _collection.AsQueryable().GroupBy(x => x.Hook.Classification)
                 .Select(g => new { Name = g.Key, Count = g.Count() })
                 .ToList()
                 .ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
         }
-
-        // the idea is to generate facets after matching stuff so you need facets for lots more fields because if you wany to search for flies that have a combination
-        // of the materials you have, you'll be running a search with all of those as facets
-
-        // build filters for each Facet
     }
 }
