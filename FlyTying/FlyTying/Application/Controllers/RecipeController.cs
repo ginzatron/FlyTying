@@ -24,15 +24,8 @@ namespace FlyTying.Application.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetRecipes(string facet)
+        public async Task<IActionResult> GetRecipes()
         {
-            // should take parameter with default value and both go to the same search?
-            // override GetAll
-            //if (facet != null)
-            //{
-            //    var result = await _repository.matchHookClassification(facet);
-            //    return Ok(result);
-            //}
             var recipes = await _repository.GetAll();
             return Ok(recipes);
         }
@@ -66,15 +59,13 @@ namespace FlyTying.Application.Controllers
         }
 
         [HttpGet("facet")] 
-        public async Task<IActionResult> BuildHookFacets()
+        public async Task<IActionResult> SearchAndAggregate(IDictionary<string, string[]> facets)
         {
-            var facetList = new Dictionary<string, string[]>();
-            facetList["patterns"] = new string[] { "Steelhead", "Hopper" };
-            facetList["patternNames"] = new string[] { "RibHaresEar2", "RoyalWulff1" };
-            facetList["hookClassification"] = new string[] { "Nymph", "Jig" };
-
-            var result = await _repository.matchHookClassification(facetList);
+            var result = await _repository.CreateFilterFromFacets(facets);
             return Ok(result);
+
+            // you're going to return 2 things:
+            // the fly values AND the new available facets
         }
     }
 }

@@ -22,7 +22,14 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Recipe>> matchHookClassification(IDictionary<string, string[]> facets) 
+        // public method that then calls private method to create the SearchFilter
+        // then calls private method to create the facets
+        // then returns a document with the results of the filter and the new facets
+
+
+        // method that searches base on filters
+        // how to create an aggregation pipeline that returns the matched documents and the new facets based on those documents
+        public async Task<IEnumerable<Recipe>> CreateFilterFromFacets(IDictionary<string, string[]> facets)
         {
             var filter = Builders<Recipe>.Filter.Empty;
 
@@ -46,8 +53,7 @@ namespace FlyTying.Application.Repositories
                 filter &= patternNameFilter;
             }
 
-            var temp = await _collection.Aggregate().Match(filter).ToListAsync();
-            return temp;
+            return await _collection.Aggregate().Match(filter).ToListAsync();
         }
 
         public async Task<string> BuildHookFacets()
