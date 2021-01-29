@@ -1,4 +1,5 @@
 ﻿using FlyTying.Application.FacetSearch;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.FacetSearch
 {
-    public class FacetGroup
+    public class UpdateFacetResults
     {
-        public string Title { get; set; }
-        public FacetItem[] Facets { get; set; }
+        public IEnumerable<Projection> FlyList { get; set; }
+        public IList<FacetGroup> FacetGroups { get; set; }
     }
 }

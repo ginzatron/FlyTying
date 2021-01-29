@@ -20,3 +20,13 @@
         //            })
         //    });
         //}
+
+
+group by example
+        //var aggregation = await _collection.Aggregate().Facet(temp).ToListAsync();
+        //return aggregation.ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+
+        //return _collection.AsQueryable().GroupBy(x => x.Hook.Classification)
+        //    .Select(g => new { Name = g.Key, Count = g.Count() })
+        //    .ToList()
+        //    .ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });

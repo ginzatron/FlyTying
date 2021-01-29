@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.FacetSearch
 {
-    public class FacetItem
+    public class Projection
     {
-        public int Count { get; set; }
-        public string Id { get; set; }
+        public string Name { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string num { get; set; }
     }
 }
