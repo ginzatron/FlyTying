@@ -63,9 +63,7 @@ namespace FlyTying.Application.Controllers
         {
             var result = await _repository.GenerateFacets(facets);
             return Ok(result);
-
-            // you're going to return 2 things:
-            // the fly values AND the new available facets
+            // This is your get all ACTION
         }
     }
 }

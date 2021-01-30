@@ -43,13 +43,14 @@ namespace FlyTying.Application.Repositories
         {
             var hookFacet = CreateHookFacet();
             var patternFacet = CreatePatternFacet();
+            var hookSizeFacet = CreateHookSizeFacet();
 
-            var searechFacets = await matchResult.Facet(hookFacet, patternFacet).ToListAsync();
+            var searechFacets = await matchResult.Facet(hookFacet, patternFacet, hookSizeFacet).ToListAsync();
             return searechFacets.First().Facets.Select(x => new FacetGroup
             {
                 Title = x.Name,
                 Facets = x.Output<AggregateSortByCountResult<string>>()
-                .Select(x => new SearechFacet { Id = x.Id, Count = (Int32)x.Count }).ToArray()
+                .Select(x => new SearechFacet { Id = x.Id, Count = (Int32)x.Count}).ToArray()
             }).ToList();
         }
 
@@ -70,6 +71,17 @@ namespace FlyTying.Application.Repositories
             PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
             {
                 PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification")
+            }));
+
+            return hookFacet;
+        }
+
+        private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreateHookSizeFacet()
+        {
+            var hookFacet = AggregateFacet.Create("HookSizeCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Size")
             }));
 
             return hookFacet;
@@ -97,6 +109,12 @@ namespace FlyTying.Application.Repositories
             {
                 var patternNameFilter = Builders<Recipe>.Filter.In(x => x.Pattern.Name, facets["patternNames"]);
                 filter &= patternNameFilter;
+            }
+
+            if (facets.ContainsKey("hookSizes"))
+            {
+                var hookSizeFilter = Builders<Recipe>.Filter.In(x => x.Hook.Size, facets["hookSizes"]);
+                filter &= hookSizeFilter;
             }
 
             return filter;
