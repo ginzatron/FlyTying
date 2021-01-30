@@ -21,26 +21,61 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        // public method that then calls private method to create the SearchFilter
-        // then calls private method to create the facets
-        // then returns a document with the results of the filter and the new facets
-
-
-        // method that searches base on filters
-        // how to create an aggregation pipeline that returns the matched documents and the new facets based on those documents
-
-        public void doEVeryting()
+        public async Task<UpdatedFacetResults> GenerateFacets(IDictionary<string, string[]> facets)
         {
-            //buil filter
-            //build facets
-            //var temp = await _collection.Aggregate()
-            //    .Match(RETURN_FILTER)
-            //    .Facet(projectFacet, hookFacet, patternFacet)
-            //    .ToListAsync();
+            var aggregate = _collection.Aggregate();
+            var matchingFilter = BuildFilterFromFacets(facets);
 
-            // CREATE RETURN OBJECT
+            var matchResult = aggregate.Match(matchingFilter);
+
+            var searchFacets = await GenerateSearchFacets(matchResult);
+
+            var returnSet = new UpdatedFacetResults()
+            {
+                Recipes = matchResult.ToList(),
+                FacetGroups = searchFacets
+            };
+
+            return returnSet;
         }
-        public async Task<IEnumerable<Recipe>> CreateFilterFromFacets(IDictionary<string, string[]> facets)
+
+        private async Task<List<FacetGroup>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult)
+        {
+            var hookFacet = CreateHookFacet();
+            var patternFacet = CreatePatternFacet();
+
+            var searechFacets = await matchResult.Facet(hookFacet, patternFacet).ToListAsync();
+            return searechFacets.First().Facets.Select(x => new FacetGroup
+            {
+                Title = x.Name,
+                Facets = x.Output<AggregateSortByCountResult<string>>()
+                .Select(x => new SearechFacet { Id = x.Id, Count = (Int32)x.Count }).ToArray()
+            }).ToList();
+        }
+
+        private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreatePatternFacet()
+        {
+            var patternFacet = AggregateFacet.Create("PatternCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.Name")
+            }));
+
+            return patternFacet;
+        }
+
+        private AggregateFacet<Recipe,AggregateSortByCountResult<string>> CreateHookFacet()
+        {
+            var hookFacet = AggregateFacet.Create("HookCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification")
+            }));
+
+            return hookFacet;
+        }
+
+        private FilterDefinition<Recipe> BuildFilterFromFacets(IDictionary<string, string[]> facets)
         {
             var filter = Builders<Recipe>.Filter.Empty;
 
@@ -64,75 +99,7 @@ namespace FlyTying.Application.Repositories
                 filter &= patternNameFilter;
             }
 
-
-            var temp = await _collection.Aggregate().Match(filter).ToListAsync();
-
-            // I want to do the match then facets where one facet is a projection of the docs and the other facets are creating new search facets
-            return temp;
-        }
-
-        public async Task<UpdateFacetResults> BuildHookFacets()
-        {
-            //method to return facetStages
-            //method to build pipelines from those stages called in above method
-
-
-            //var sortByCountHook = PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification");
-            //var sortByCountPattern = PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("Pattern.Name");
-
-            //var pipeline1 = PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new IPipelineStageDefinition[] { sortByCountHook});
-            //var pipeline2 = PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new IPipelineStageDefinition[] { sortByCountPattern });
-
-            //var facetPipeline1 = AggregateFacet.Create("pipe1", pipeline1);
-            //var facetPipeline2 = AggregateFacet.Create("pipe2", pipeline2);
-
-            var hookFacet = AggregateFacet.Create("HookCount",
-            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
-            {
-                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification")
-            }));
-
-            var patternFacet = AggregateFacet.Create("PatternCount",
-            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
-            {
-                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.Name")
-            }));
-
-            var projectFacet = AggregateFacet.Create("ProjectFacet",
-                PipelineDefinition<Recipe, Projection>.Create(new[]
-                {
-                    PipelineStageDefinitionBuilder.Project<Recipe, Projection>(x => new Projection { Name = x.Name, num = x.Id})
-             }));
-
-            var temp =  await _collection.Aggregate()
-                .Match(Builders<Recipe>.Filter.Empty)
-                .Facet(projectFacet, hookFacet, patternFacet)
-                .ToListAsync();
-
-
-            var flyList = temp.First().Facets.First(x => x.Name == "ProjectFacet").Output<Projection>().ToList();
-            
-            var hookReturn = temp.First().Facets.Where(x => x.Name == "HookCount").Select(x => new FacetGroup
-            {
-                Title = x.Name,
-                Facets = x.Output<AggregateSortByCountResult<string>>()
-                    .Select(x => new FacetItem { Id = x.Id, Count = (Int32)x.Count }).ToArray()
-            }).FirstOrDefault();
-
-            var patternReturn = temp.First().Facets.Where(x => x.Name == "PatternCount").Select(x => new FacetGroup
-            {
-                Title = x.Name,
-                Facets = x.Output<AggregateSortByCountResult<string>>()
-                    .Select(x => new FacetItem { Id = x.Id, Count = (Int32)x.Count }).ToArray()
-            }).FirstOrDefault();
-
-            var returnSet = new UpdateFacetResults() 
-            {
-                FlyList = flyList,
-                FacetGroups = new List<FacetGroup>() { hookReturn, patternReturn}
-            };
-
-            return returnSet;
+            return filter;
         }
     }
 }

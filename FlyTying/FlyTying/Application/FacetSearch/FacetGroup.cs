@@ -9,6 +9,6 @@ namespace FlyTying.Application.FacetSearch
     public class FacetGroup
     {
         public string Title { get; set; }
-        public FacetItem[] Facets { get; set; }
+        public SearechFacet[] Facets { get; set; }
     }
 }

@@ -61,8 +61,7 @@ namespace FlyTying.Application.Controllers
         [HttpGet("facet")] 
         public async Task<IActionResult> SearchAndAggregate(IDictionary<string, string[]> facets)
         {
-            //var result = await _repository.CreateFilterFromFacets(facets);
-            var result = await _repository.BuildHookFacets();
+            var result = await _repository.GenerateFacets(facets);
             return Ok(result);
 
             // you're going to return 2 things:
