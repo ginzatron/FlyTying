@@ -58,7 +58,7 @@ namespace FlyTying.Application.Controllers
             return Ok();
         }
 
-        [HttpGet("facet")] 
+        [HttpPost("facet")] 
         public async Task<IActionResult> SearchAndAggregate(IDictionary<string, string[]> facets)
         {
             var result = await _repository.GenerateFacets(facets);
