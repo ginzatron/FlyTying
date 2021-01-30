@@ -1,5 +1,4 @@
 ﻿using FlyTying.Application.Contexts;
-using FlyTying.Application.Facet;
 using FlyTying.Application.FacetSearch;
 using FlyTying.Application.Interfaces;
 using FlyTying.Domain.Recipe;
@@ -22,14 +21,73 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        // public method that then calls private method to create the SearchFilter
-        // then calls private method to create the facets
-        // then returns a document with the results of the filter and the new facets
+        public async Task<UpdatedFacetResults> GenerateFacets(IDictionary<string, string[]> facets)
+        {
+            var aggregate = _collection.Aggregate();
+            var matchingFilter = BuildFilterFromFacets(facets);
 
+            var matchResult = aggregate.Match(matchingFilter);
 
-        // method that searches base on filters
-        // how to create an aggregation pipeline that returns the matched documents and the new facets based on those documents
-        public async Task<IEnumerable<Recipe>> CreateFilterFromFacets(IDictionary<string, string[]> facets)
+            var searchFacets = await GenerateSearchFacets(matchResult);
+
+            var returnSet = new UpdatedFacetResults()
+            {
+                Recipes = matchResult.ToList(),
+                FacetGroups = searchFacets
+            };
+
+            return returnSet;
+        }
+
+        private async Task<List<FacetGroup>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult)
+        {
+            var hookFacet = CreateHookFacet();
+            var patternFacet = CreatePatternFacet();
+            var hookSizeFacet = CreateHookSizeFacet();
+
+            var searechFacets = await matchResult.Facet(hookFacet, patternFacet, hookSizeFacet).ToListAsync();
+            return searechFacets.First().Facets.Select(x => new FacetGroup
+            {
+                Title = x.Name,
+                Facets = x.Output<AggregateSortByCountResult<string>>()
+                .Select(x => new SearechFacet { Id = x.Id, Count = (Int32)x.Count}).ToArray()
+            }).ToList();
+        }
+
+        private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreatePatternFacet()
+        {
+            var patternFacet = AggregateFacet.Create("PatternCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.Name")
+            }));
+
+            return patternFacet;
+        }
+
+        private AggregateFacet<Recipe,AggregateSortByCountResult<string>> CreateHookFacet()
+        {
+            var hookFacet = AggregateFacet.Create("HookCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification")
+            }));
+
+            return hookFacet;
+        }
+
+        private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreateHookSizeFacet()
+        {
+            var hookFacet = AggregateFacet.Create("HookSizeCount",
+            PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+            {
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Size")
+            }));
+
+            return hookFacet;
+        }
+
+        private FilterDefinition<Recipe> BuildFilterFromFacets(IDictionary<string, string[]> facets)
         {
             var filter = Builders<Recipe>.Filter.Empty;
 
@@ -53,15 +111,14 @@ namespace FlyTying.Application.Repositories
                 filter &= patternNameFilter;
             }
 
-            return await _collection.Aggregate().Match(filter).ToListAsync();
-        }
+            if (facets.ContainsKey("hookSizes"))
+            {
+                var hookSizeFilter = Builders<Recipe>.Filter.In(x => x.Hook.Size, facets["hookSizes"]);
+                filter &= hookSizeFilter;
+            }
 
-        public async Task<string> BuildHookFacets()
-        {
-            return _collection.AsQueryable().GroupBy(x => x.Hook.Classification)
-                .Select(g => new { Name = g.Key, Count = g.Count() })
-                .ToList()
-                .ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+            return filter;
         }
     }
 }
+

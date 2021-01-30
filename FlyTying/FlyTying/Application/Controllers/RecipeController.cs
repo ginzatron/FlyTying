@@ -61,11 +61,9 @@ namespace FlyTying.Application.Controllers
         [HttpGet("facet")] 
         public async Task<IActionResult> SearchAndAggregate(IDictionary<string, string[]> facets)
         {
-            var result = await _repository.CreateFilterFromFacets(facets);
+            var result = await _repository.GenerateFacets(facets);
             return Ok(result);
-
-            // you're going to return 2 things:
-            // the fly values AND the new available facets
+            // This is your get all ACTION
         }
     }
 }

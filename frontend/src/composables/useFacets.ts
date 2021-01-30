@@ -15,5 +15,4 @@ export function useFacets() {
   return {
     getFacets,
   };
-  
 }

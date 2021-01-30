@@ -20,3 +20,27 @@
         //            })
         //    });
         //}
+
+
+group by example
+        //var aggregation = await _collection.Aggregate().Facet(temp).ToListAsync();
+        //return aggregation.ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+
+        //return _collection.AsQueryable().GroupBy(x => x.Hook.Classification)
+        //    .Select(g => new { Name = g.Key, Count = g.Count() })
+        //    .ToList()
+        //    .ToJson(new MongoDB.Bson.IO.JsonWriterSettings { Indent = true });
+
+different pipeline methods
+            //method to return facetStages
+            //method to build pipelines from those stages called in above method
+
+
+            //var sortByCountHook = PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification");
+            //var sortByCountPattern = PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("Pattern.Name");
+
+            //var pipeline1 = PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new IPipelineStageDefinition[] { sortByCountHook});
+            //var pipeline2 = PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new IPipelineStageDefinition[] { sortByCountPattern });
+
+            //var facetPipeline1 = AggregateFacet.Create("pipe1", pipeline1);
+            //var facetPipeline2 = AggregateFacet.Create("pipe2", pipeline2);
