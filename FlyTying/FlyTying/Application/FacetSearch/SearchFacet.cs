@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace FlyTying.Application.FacetSearch
 {
-    public class SearechFacet
+    public class SearchFacet
     {
         public int Count { get; set; }
-        public string Id { get; set; }
+        public string Title { get; set; }
+        public string Group { get; set; }
+        public bool Selected { get; set; }
     }
 }

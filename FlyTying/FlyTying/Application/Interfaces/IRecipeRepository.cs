@@ -11,6 +11,6 @@ namespace FlyTying.Application.Interfaces
 {
     public interface IRecipeRepository : IAsyncRepository<Recipe>
     {
-        Task<UpdatedFacetResults> GenerateFacets(IDictionary<string, string[]> facets);
+        Task<UpdatedFacetResults> GenerateFacets(IEnumerable<SearchFacet> facets);
     }
 }

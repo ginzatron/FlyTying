@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using FlyTying.Application.FacetSearch;
 using FlyTying.Application.Interfaces;
 using FlyTying.Application.Repositories;
 using FlyTying.Domain.Recipe;
@@ -59,7 +60,7 @@ namespace FlyTying.Application.Controllers
         }
 
         [HttpPost("facet")] 
-        public async Task<IActionResult> SearchAndAggregate(IDictionary<string, string[]> facets)
+        public async Task<IActionResult> SearchAndAggregate(IList<SearchFacet> facets)
         {
             var result = await _repository.GenerateFacets(facets);
             return Ok(result);
