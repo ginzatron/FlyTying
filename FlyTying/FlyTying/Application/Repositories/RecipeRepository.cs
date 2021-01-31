@@ -21,7 +21,7 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<UpdatedFacetResults> GenerateFacets(IDictionary<string, string[]> facets)
+        public async Task<UpdatedFacetResults> GenerateFacets(IEnumerable<SearchFacet> facets)
         {
             var aggregate = _collection.Aggregate();
             var matchingFilter = BuildFilterFromFacets(facets);
@@ -29,34 +29,55 @@ namespace FlyTying.Application.Repositories
             var matchResult = aggregate.Match(matchingFilter);
 
             var searchFacets = await GenerateSearchFacets(matchResult);
-
+            foreach(var f in facets)
+            {
+                searchFacets.Add(f);
+            }
+            //TODO: Work on filter and duplicating return facets if i select egg, don't return egg(1)
+            
             var returnSet = new UpdatedFacetResults()
             {
                 Recipes = matchResult.ToList(),
-                FacetGroups = searchFacets
+                Facets = searchFacets
             };
 
             return returnSet;
         }
 
-        private async Task<List<FacetGroup>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult)
+        private async Task<List<SearchFacet>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult)
         {
             var hookFacet = CreateHookFacet();
             var patternFacet = CreatePatternFacet();
             var hookSizeFacet = CreateHookSizeFacet();
 
             var searechFacets = await matchResult.Facet(hookFacet, patternFacet, hookSizeFacet).ToListAsync();
-            return searechFacets.First().Facets.Select(x => new FacetGroup
+            var x =  searechFacets.First().Facets.Select(x => new { Group = x.Name, Facets = x.Output<AggregateSortByCountResult<string>>() });
+
+            var facetList = new List<SearchFacet>();
+
+            foreach(var record in x)
             {
-                Title = x.Name,
-                Facets = x.Output<AggregateSortByCountResult<string>>()
-                .Select(x => new SearechFacet { Id = x.Id, Count = (Int32)x.Count}).ToArray()
-            }).ToList();
+                var facet = record.Facets;
+                foreach(var f in facet)
+                {
+                    var searchFacet = new SearchFacet()
+                    {
+                        Count = (Int32)f.Count,
+                        Title = f.Id,
+                        Group = record.Group
+                    };
+                    facetList.Add(searchFacet);
+                }
+            }
+
+            //should I try to update the selected field with what's returned from the UI?
+
+            return facetList;
         }
 
         private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreatePatternFacet()
         {
-            var patternFacet = AggregateFacet.Create("PatternCount",
+            var patternFacet = AggregateFacet.Create("PatternNames",
             PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
             {
                 PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.Name")
@@ -67,7 +88,7 @@ namespace FlyTying.Application.Repositories
 
         private AggregateFacet<Recipe,AggregateSortByCountResult<string>> CreateHookFacet()
         {
-            var hookFacet = AggregateFacet.Create("HookCount",
+            var hookFacet = AggregateFacet.Create("HookClassifications",
             PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
             {
                 PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Classification")
@@ -78,7 +99,7 @@ namespace FlyTying.Application.Repositories
 
         private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreateHookSizeFacet()
         {
-            var hookFacet = AggregateFacet.Create("HookSizeCount",
+            var hookFacet = AggregateFacet.Create("HookSizes",
             PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
             {
                 PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Hook.Size")
@@ -87,33 +108,47 @@ namespace FlyTying.Application.Repositories
             return hookFacet;
         }
 
-        private FilterDefinition<Recipe> BuildFilterFromFacets(IDictionary<string, string[]> facets)
+        private FilterDefinition<Recipe> BuildFilterFromFacets(IEnumerable<SearchFacet> facets)
         {
+            // this is not an elegant or efficient way to do this
             var filter = Builders<Recipe>.Filter.Empty;
+            var facetDictionary = new Dictionary<string, List<string>>();
 
-            if (facets.ContainsKey("patterns"))
+            foreach(var record in facets)
             {
-                var patternArray = facets["patterns"].Select(x => (PatternType)Enum.Parse(typeof(PatternType), x));
+                if (!facetDictionary.ContainsKey(record.Group))
+                {
+                    facetDictionary[record.Group] = new List<string>() { record.Title };
+                }
+                else
+                {
+                    facetDictionary[record.Group].Add(record.Title);
+                }
+            }
+
+            if (facetDictionary.ContainsKey("PatternTypes"))
+            {
+                var patternArray = facetDictionary["PatternTypes"].Select(x => (PatternType)Enum.Parse(typeof(PatternType), x));
                 var patternFilter = Builders<Recipe>.Filter.In(x => x.Pattern.PatternType, patternArray);
                 filter &= patternFilter;
             }
 
-            if (facets.ContainsKey("hookClassification"))
+            if (facetDictionary.ContainsKey("HookClassifications"))
             {
-                var hookArray = facets["hookClassification"].Select(x => (HookClassification)Enum.Parse(typeof(HookClassification), x));
+                var hookArray = facetDictionary["HookClassifications"].Select(x => (HookClassification)Enum.Parse(typeof(HookClassification), x));
                 var hookClassFilter = Builders<Recipe>.Filter.In(x => x.Hook.Classification, hookArray);
                 filter &= hookClassFilter;
             }
 
-            if (facets.ContainsKey("patternNames"))
+            if (facetDictionary.ContainsKey("PatternNames"))
             {
-                var patternNameFilter = Builders<Recipe>.Filter.In(x => x.Pattern.Name, facets["patternNames"]);
+                var patternNameFilter = Builders<Recipe>.Filter.In(x => x.Pattern.Name, facetDictionary["PatternNames"]);
                 filter &= patternNameFilter;
             }
 
-            if (facets.ContainsKey("hookSizes"))
+            if (facetDictionary.ContainsKey("HookSizes"))
             {
-                var hookSizeFilter = Builders<Recipe>.Filter.In(x => x.Hook.Size, facets["hookSizes"]);
+                var hookSizeFilter = Builders<Recipe>.Filter.In(x => x.Hook.Size, facetDictionary["HookSizes"]);
                 filter &= hookSizeFilter;
             }
 

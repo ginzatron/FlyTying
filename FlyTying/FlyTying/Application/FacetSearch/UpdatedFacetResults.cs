@@ -11,6 +11,6 @@ namespace FlyTying.Application.FacetSearch
     public class UpdatedFacetResults
     {
         public IEnumerable<Recipe> Recipes { get; set; }
-        public IList<FacetGroup> FacetGroups { get; set; }
+        public IList<SearchFacet> Facets { get; set; }
     }
 }
