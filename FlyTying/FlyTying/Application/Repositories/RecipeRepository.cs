@@ -29,11 +29,6 @@ namespace FlyTying.Application.Repositories
             var matchResult = aggregate.Match(matchingFilter);
 
             var searchFacets = await GenerateSearchFacets(matchResult, selectedFacets);
-            //foreach (var f in facets)
-            //{
-            //    searchFacets.Add(f);
-            //}
-            //TODO: should not generate a new facet of the same one passed in
 
             var returnSet = new UpdatedFacetResults()
             {
@@ -74,8 +69,6 @@ namespace FlyTying.Application.Repositories
                     facetList.Add(searchFacet);
                 }
             }
-
-            //should I try to update the selected field with what's returned from the UI?
 
             return facetList;
         }
