@@ -21,20 +21,15 @@ namespace FlyTying.Application.Repositories
             _context = context;
         }
 
-        public async Task<UpdatedFacetResults> GenerateFacets(IEnumerable<SearchFacet> facets)
+        public async Task<UpdatedFacetResults> GenerateFacets(IEnumerable<SearchFacet> selectedFacets)
         {
             var aggregate = _collection.Aggregate();
-            var matchingFilter = BuildFilterFromFacets(facets);
+            var matchingFilter = BuildFilterFromFacets(selectedFacets);
 
             var matchResult = aggregate.Match(matchingFilter);
 
-            var searchFacets = await GenerateSearchFacets(matchResult);
-            foreach(var f in facets)
-            {
-                searchFacets.Add(f);
-            }
-            //TODO: Work on filter and duplicating return facets if i select egg, don't return egg(1)
-            
+            var searchFacets = await GenerateSearchFacets(matchResult, selectedFacets);
+
             var returnSet = new UpdatedFacetResults()
             {
                 Recipes = matchResult.ToList(),
@@ -44,7 +39,7 @@ namespace FlyTying.Application.Repositories
             return returnSet;
         }
 
-        private async Task<List<SearchFacet>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult)
+        private async Task<List<SearchFacet>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult, IEnumerable<SearchFacet> selectedFacets)
         {
             var hookFacet = CreateHookFacet();
             var patternFacet = CreatePatternFacet();
@@ -64,13 +59,16 @@ namespace FlyTying.Application.Repositories
                     {
                         Count = (Int32)f.Count,
                         Title = f.Id,
-                        Group = record.Group
+                        Group = record.Group,
+                        Selected = false
                     };
+
+                    if (selectedFacets.Any(x => x.Group == searchFacet.Group && x.Title == searchFacet.Title))
+                        searchFacet.Selected = true;
+
                     facetList.Add(searchFacet);
                 }
             }
-
-            //should I try to update the selected field with what's returned from the UI?
 
             return facetList;
         }

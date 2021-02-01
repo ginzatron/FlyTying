@@ -45,7 +45,7 @@ export default {
     });
 
     async function getFacets() {
-        //TODO: add timeout to keep adding facets, once the request goes you can't select until its done loading
+        //TODO: add timeout to keep adding facets, once the request is sent you need ti disable adding facets
       const response = await fetch(
         `https://localhost:44352/api/recipes/facet`,
         {
