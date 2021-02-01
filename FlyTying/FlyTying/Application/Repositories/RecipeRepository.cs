@@ -109,6 +109,7 @@ namespace FlyTying.Application.Repositories
         private FilterDefinition<Recipe> BuildFilterFromFacets(IEnumerable<SearchFacet> facets)
         {
             // this is not an elegant or efficient way to do this
+            // probably want a facet inheritance structure: Facet brances to searchFacet, or a MatchFacet and facets probably want sub facets
             var filter = Builders<Recipe>.Filter.Empty;
             var facetDictionary = new Dictionary<string, List<string>>();
 
