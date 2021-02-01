@@ -1,6 +1,6 @@
 <template>
   <button @click="getFacets">Click me</button>
-  <div class="search-Setup">
+  <div class="search-Setup" v-if="!loading">
     <div class="available-facets">
       <h3>AvailableFacets</h3>
       <div
@@ -28,6 +28,7 @@
       </div>
     </div>
   </div>
+  <div v-else>LOADING</div>
 </template>
 
 <script>
@@ -35,6 +36,7 @@ import { ref, computed } from "vue";
 
 export default {
   setup() {
+    const loading = ref(false);
     const recipes = ref([]);
     const facets = ref([]);
     const availableFacets = computed(() => {
@@ -46,6 +48,7 @@ export default {
 
     async function getFacets() {
         //TODO: add timeout to keep adding facets, once the request is sent you need ti disable adding facets
+      loading.value = true;  
       const response = await fetch(
         `https://localhost:44352/api/recipes/facet`,
         {
@@ -58,7 +61,8 @@ export default {
         }
       );
       const data = await response.json();
-    
+      loading.value = false;
+
       recipes.value = data.recipes;
       facets.value = data.facets;
     }
@@ -74,6 +78,7 @@ export default {
       selectedFacets,
       recipes,
       flipSelected,
+      loading
     };
   },
 };
