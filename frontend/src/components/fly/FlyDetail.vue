@@ -36,5 +36,6 @@ export default {
 .fly-content {
   display: flex;
   justify-content: center;
+  background-color: green;
 }
 </style>

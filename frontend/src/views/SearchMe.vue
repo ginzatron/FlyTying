@@ -1,5 +1,5 @@
 <template>
-  <button @click="getFacets">Click me</button>
+  <button @click="removeSelectedFacets">removeSelectedFacets</button>
   <div class="search-Setup" v-if="!loading">
     <div class="available-facets">
       <h3>AvailableFacets</h3>
@@ -11,10 +11,14 @@
         {{ facet.title }} ({{ facet.count }})
       </div>
     </div>
-    <div class="recipes">
+    <div class="fly">
       <h3>Recipes</h3>
-      <div v-for="recipe in recipes" :key="recipe.id">
-        {{ recipe.pattern.name }}
+      <div v-for="fly in flys" :key="fly.id">
+        <h3>
+          <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
+          fly.pattern.name
+        }}</router-link>
+        </h3>
       </div>
     </div>
     <div class="selected-Facets">
@@ -32,12 +36,12 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted} from "vue";
 
 export default {
   setup() {
     const loading = ref(false);
-    const recipes = ref([]);
+    const flys = ref([]);
     const facets = ref([]);
     const availableFacets = computed(() => {
       return facets.value.filter((facet) => !facet.selected);
@@ -45,9 +49,9 @@ export default {
     const selectedFacets = computed(() => {
       return facets.value.filter((facet) => facet.selected);
     });
+    //Think about making selectedFacets global 
 
     async function getFacets() {
-        //TODO: add timeout to keep adding facets, once the request is sent you need ti disable adding facets
       loading.value = true;  
       const response = await fetch(
         `https://localhost:44352/api/recipes/facet`,
@@ -63,12 +67,21 @@ export default {
       const data = await response.json();
       loading.value = false;
 
-      recipes.value = data.recipes;
+      flys.value = data.recipes;
       facets.value = data.facets;
     }
 
+    onMounted(getFacets())
+
     async function flipSelected(facet) {
       facet.selected = !facet.selected;
+      await getFacets();
+    }
+
+    async function removeSelectedFacets(){
+      facets.value.forEach((facet) => {
+        facet.selected = false;
+      })
       await getFacets();
     }
 
@@ -76,9 +89,10 @@ export default {
       getFacets,
       availableFacets,
       selectedFacets,
-      recipes,
+      flys,
       flipSelected,
-      loading
+      loading,
+      removeSelectedFacets
     };
   },
 };
