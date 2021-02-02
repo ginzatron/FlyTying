@@ -75,10 +75,10 @@ namespace FlyTying.Application.Repositories
 
         private AggregateFacet<Recipe, AggregateSortByCountResult<string>> CreatePatternFacet()
         {
-            var patternFacet = AggregateFacet.Create("PatternNames",
+            var patternFacet = AggregateFacet.Create("PatternTypes",
             PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
             {
-                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.Name")
+                PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("$Pattern.PatternType")
             }));
 
             return patternFacet;
@@ -109,7 +109,6 @@ namespace FlyTying.Application.Repositories
         private FilterDefinition<Recipe> BuildFilterFromFacets(IEnumerable<SearchFacet> facets)
         {
             // this is not an elegant or efficient way to do this
-            // probably want a facet inheritance structure: Facet brances to searchFacet, or a MatchFacet and facets probably want sub facets
             var filter = Builders<Recipe>.Filter.Empty;
             var facetDictionary = new Dictionary<string, List<string>>();
 
@@ -137,12 +136,6 @@ namespace FlyTying.Application.Repositories
                 var hookArray = facetDictionary["HookClassifications"].Select(x => (HookClassification)Enum.Parse(typeof(HookClassification), x));
                 var hookClassFilter = Builders<Recipe>.Filter.In(x => x.Hook.Classification, hookArray);
                 filter &= hookClassFilter;
-            }
-
-            if (facetDictionary.ContainsKey("PatternNames"))
-            {
-                var patternNameFilter = Builders<Recipe>.Filter.In(x => x.Pattern.Name, facetDictionary["PatternNames"]);
-                filter &= patternNameFilter;
             }
 
             if (facetDictionary.ContainsKey("HookSizes"))
