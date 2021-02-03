@@ -1,44 +1,54 @@
 <template>
-  <button @click="removeSelectedFacets">removeSelectedFacets</button>
+  <button @click="removeSelectedFacets">Reset Search Facets</button>
   <div class="search-Setup" v-if="!loading">
     <div class="available-facets">
       <h3>AvailableFacets</h3>
-      <div
+      <!-- Going to want to do Facet Group component that has Facet components in it -->
+      <facet
         v-for="facet in availableFacets"
         :key="facet.title"
-        @click="flipSelected(facet)"
+        :title="facet.title"
+        :count="facet.count"
+        :group="facet.group"
+        @facetSelected="flipSelected"
       >
         {{ facet.title }} ({{ facet.count }})
-      </div>
+      </facet>
     </div>
     <div class="fly">
       <h3>Recipes</h3>
       <div v-for="fly in flys" :key="fly.id">
         <h3>
           <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
-          fly.pattern.name
-        }}</router-link>
+            fly.pattern.name
+          }}</router-link>
         </h3>
       </div>
     </div>
     <div class="selected-Facets">
-        <h3>SelectedFacets</h3>
-        <div
+      <h3>SelectedFacets</h3>
+      <facet
         v-for="facet in selectedFacets"
         :key="facet.title"
-        @click="flipSelected(facet)"
+        :title="facet.title"
+        :group="facet.group"
+        @facetSelected="flipSelected"
       >
         {{ facet.title }} ({{ facet.count }})
-      </div>
+      </facet>
     </div>
   </div>
   <div v-else>LOADING</div>
 </template>
 
 <script>
-import { ref, computed, onMounted} from "vue";
+import { ref, computed, onMounted } from "vue";
+import Facet from "@/components/facet/Facet.vue";
 
 export default {
+  components: {
+    Facet,
+  },
   setup() {
     const loading = ref(false);
     const flys = ref([]);
@@ -49,10 +59,10 @@ export default {
     const selectedFacets = computed(() => {
       return facets.value.filter((facet) => facet.selected);
     });
-    //Think about making selectedFacets global 
+    //Think about making selectedFacets global
 
     async function getFacets() {
-      loading.value = true;  
+      loading.value = true;
       const response = await fetch(
         `https://localhost:44352/api/recipes/facet`,
         {
@@ -71,17 +81,20 @@ export default {
       facets.value = data.facets;
     }
 
-    onMounted(getFacets())
+    onMounted(getFacets());
 
-    async function flipSelected(facet) {
+    async function flipSelected({ title, group }) {
+      const facet = facets.value.find((x) => {
+        return x.title === title && x.group === group;
+      });
       facet.selected = !facet.selected;
       await getFacets();
     }
 
-    async function removeSelectedFacets(){
+    async function removeSelectedFacets() {
       facets.value.forEach((facet) => {
         facet.selected = false;
-      })
+      });
       await getFacets();
     }
 
@@ -92,7 +105,7 @@ export default {
       flys,
       flipSelected,
       loading,
-      removeSelectedFacets
+      removeSelectedFacets,
     };
   },
 };
