@@ -1,5 +1,5 @@
 <template>
-  <div class="available-facets">
+  <div class="facets">
     <h3>Facets</h3>
     <facet
       v-for="facet in facetItems"
@@ -10,7 +10,6 @@
       :selected="facet.selected"
       @facetSelected="passUp"
     >
-      {{ facet.title }} ({{ facet.count }})
     </facet>
   </div>
 </template>
@@ -39,7 +38,7 @@ export default {
 </script>
 
 <style scoped>
-.available-facets {
+.facets {
   display: flex;
   flex-direction: column;
 }
