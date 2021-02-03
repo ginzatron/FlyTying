@@ -1,55 +1,27 @@
 <template>
-  <fly-search v-model="nameToSearch"></fly-search>
-  <facet-list @searchFacet="matchFacet"></facet-list>
-  <div v-if="loading">
-    <h1>Loading</h1>
-  </div>
-  <div class="main" v-if="!loading">
-    <div v-for="name in filteredNames" :key="name.id">
-      <h3>
-        <router-link :to="{ name: 'Fly', params: { id: name.id } }">{{
-          name.name
-        }}</router-link>
-      </h3>
-    </div>
+  <div v-for="fly in flys" :key="fly.id">
+    <h3>
+      <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
+        fly.pattern.name
+      }}</router-link>
+    </h3>
   </div>
 </template>
 
-<script >
-import { onMounted } from "vue";
-import { useFlys } from "@/composables/useFlys";
-import FlySearch from '@/components/fly/FlySearch.vue';
-import FacetList from '@/components/facet/FacetList';
+<script>
+import { ref } from "vue";
 
 export default {
-  components: {
-    FlySearch,
-    FacetList
-  },
-  setup() {
-    const { getFlys, filteredNames, loading, nameToSearch } = useFlys();
-
-    async function matchFacet(facet) {
-      getFlys(facet.value);
-    }
-
-    onMounted(getFlys);
+  props: ["list"],
+  setup(props) {
+    const flys = ref(props.list);
 
     return {
-      loading,
-      nameToSearch,
-      filteredNames,
-      matchFacet,
-    }
-  }
-}
+      flys,
+    };
+  },
+};
 </script>
 
-<style scoped>
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-content: center;
-}
+<style>
 </style>

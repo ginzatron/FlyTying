@@ -1,41 +1,23 @@
 <template>
   <button @click="removeSelectedFacets">Reset Search Facets</button>
   <div class="search-Setup" v-if="!loading">
-    <div class="available-facets">
-      <h3>AvailableFacets</h3>
-      <!-- Going to want to do Facet Group component that has Facet components in it -->
-      <facet
-        v-for="facet in availableFacets"
-        :key="facet.title"
-        :title="facet.title"
-        :count="facet.count"
-        :group="facet.group"
+    <div>
+      <h3>Available</h3>
+      <facet-group
+        :facets="availableFacets"
         @facetSelected="flipSelected"
-      >
-        {{ facet.title }} ({{ facet.count }})
-      </facet>
+      ></facet-group>
     </div>
-    <div class="fly">
-      <h3>Recipes</h3>
-      <div v-for="fly in flys" :key="fly.id">
-        <h3>
-          <router-link :to="{ name: 'Fly', params: { id: fly.id } }">{{
-            fly.pattern.name
-          }}</router-link>
-        </h3>
-      </div>
+    <div>
+      <h3>Flys</h3>
+      <fly-list :list="flys"></fly-list>
     </div>
-    <div class="selected-Facets">
-      <h3>SelectedFacets</h3>
-      <facet
-        v-for="facet in selectedFacets"
-        :key="facet.title"
-        :title="facet.title"
-        :group="facet.group"
+    <div>
+      <h3>Selected</h3>
+      <facet-group
+        :facets="selectedFacets"
         @facetSelected="flipSelected"
-      >
-        {{ facet.title }} ({{ facet.count }})
-      </facet>
+      ></facet-group>
     </div>
   </div>
   <div v-else>LOADING</div>
@@ -43,11 +25,13 @@
 
 <script>
 import { ref, computed, onMounted } from "vue";
-import Facet from "@/components/facet/Facet.vue";
+import FacetGroup from "@/components/facet/FacetGroup.vue";
+import FlyList from "@/components/fly/FlyList.vue";
 
 export default {
   components: {
-    Facet,
+    FacetGroup,
+    FlyList,
   },
   setup() {
     const loading = ref(false);
@@ -59,7 +43,6 @@ export default {
     const selectedFacets = computed(() => {
       return facets.value.filter((facet) => facet.selected);
     });
-    //Think about making selectedFacets global
 
     async function getFacets() {
       loading.value = true;
