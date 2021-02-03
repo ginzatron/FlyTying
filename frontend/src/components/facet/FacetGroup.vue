@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import Facet from "@/components/facet/Facet.vue";
 import { ref } from "vue";
+import Facet from "@/components/facet/Facet.vue";
 
 export default {
   components: { Facet },

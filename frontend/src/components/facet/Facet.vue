@@ -36,7 +36,4 @@ export default {
 </script>
 
 <style scoped>
-.selected {
-  color: blueviolet;
-}
 </style>
