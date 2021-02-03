@@ -1,45 +1,40 @@
 <template>
   <section>
-    <div class="title" >
-      <label :class="{selected: facetSelected}">{{ facetName }}</label>
-      <input type="checkbox" v-model="facetSelected" @input="updateSelectedFacet">
-    </div>
+    <div @click="selectFacet">{{ title }} <span v-if="count">({{ count }})</span></div>
   </section>
 </template>
 
 <script>
-import {ref, computed} from 'vue';
+import { ref } from "vue";
 
 export default {
-  props: ["facet","modelValue"],
-  emits: ['update:modelValue','update'],
+  props: ["title", "count", "group"],
+  emits: ["facetSelected"],
 
-  setup(props,{emit}) {
-    const facetName = ref(props.facet);
+  setup(props, { emit }) {
+    const facetTitle = ref(props.title);
+    const facetCount = ref(props.count);
+    const facetGroup = ref(props.group);
 
-    const facetSelected = computed({
-      get: () => props.modelValue,
-      set: (value) => emit('update:modelValue',value)
-    });
-
-    async function updateSelectedFacet() {
-      emit('update',facetName);
+    async function selectFacet() {
+      const info = {
+        title: facetTitle.value,
+        group: facetGroup.value,
+      };
+      emit("facetSelected", info);
     }
 
     return {
-      facetSelected,
-      facetName,
-      updateSelectedFacet
-    }
-  }
-  
+      facetTitle,
+      facetCount,
+      selectFacet,
+    };
+  },
 };
 </script>
 
 <style scoped>
-
 .selected {
   color: blueviolet;
 }
-
 </style>
