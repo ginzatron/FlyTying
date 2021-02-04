@@ -82,7 +82,6 @@ export default {
     }
 
     return {
-      getFacets,
       availableFacets,
       selectedFacets,
       flys,
