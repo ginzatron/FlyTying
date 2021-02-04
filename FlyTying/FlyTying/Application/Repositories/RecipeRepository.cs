@@ -14,7 +14,7 @@ namespace FlyTying.Application.Repositories
     public class RecipeRepository : MongoAsyncRepository<Recipe>, IRecipeRepository
     {
         private readonly MongoRecipeDBContext _context;
-        private static readonly string[] _facets = {"Hook.Classifiacation", "Pattern.PatternType", "HookSizes"};
+        private static readonly string[] _facets = {"Hook_Classification", "Pattern_PatternType", "Hook_Sizes"};
 
         public RecipeRepository(MongoRecipeDBContext context)
             : base(context)
@@ -42,8 +42,7 @@ namespace FlyTying.Application.Repositories
 
         private async Task<IEnumerable<SearchFacet>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult, IEnumerable<SearchFacet> selectedFacets)
         {
-            var x = CreateFacet().ToArray();
-            var searechFacets = await matchResult.Facet(x).ToListAsync();
+            var searechFacets = await matchResult.Facet(CreateFacet().ToArray()).ToListAsync();
             var results =  searechFacets.First().Facets.Select(x => new { Group = x.Name, Facets = x.Output<AggregateSortByCountResult<string>>() });
 
             return from result in results
@@ -55,33 +54,6 @@ namespace FlyTying.Application.Repositories
                         Group = result.Group, 
                         Selected = (selectedFacets.Any(x => x.Group == result.Group && x.Title == facet.Id))
                     });
-
-
-    
-                    
-            //var facetList = new List<SearchFacet>();
-
-            //foreach (var record in results)
-            //{
-            //    var facet = record.Facets;
-            //    foreach (var f in facet)
-            //    {
-            //        var searchFacet = new SearchFacet()
-            //        {
-            //            Count = (Int32)f.Count,
-            //            Title = f.Id,
-            //            Group = record.Group,
-            //            Selected = false
-            //        };
-
-            //        if (selectedFacets.Any(x => x.Group == searchFacet.Group && x.Title == searchFacet.Title))
-            //            searchFacet.Selected = true;
-
-            //        facetList.Add(searchFacet);
-            //    }
-            //}
-
-            //return facetList;
         }
 
         private IEnumerable<AggregateFacet<Recipe, AggregateSortByCountResult<string>>> CreateFacet()
@@ -90,10 +62,11 @@ namespace FlyTying.Application.Repositories
             {
                 yield return AggregateFacet.Create(facet, PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
                 {
-                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("${$facet}")
+                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>($"${facet.Replace("_",".")}")
                 }));
             }
         }
+
         private FilterDefinition<Recipe> BuildFilterFromFacets(IEnumerable<SearchFacet> facets)
         {
             var filter = Builders<Recipe>.Filter.Empty;
@@ -102,7 +75,7 @@ namespace FlyTying.Application.Repositories
             var facetDictionary = (from facet in facets
                                    group facet.Title by facet.Group
                                    into dict
-                                   select dict).ToDictionary(x => x.Key, x => x.ToArray());
+                                   select dict).ToDictionary(x => x.Key.Replace("_","."), x => x.ToArray());
 
             foreach(var keyValuePair in facetDictionary)
             {
@@ -111,9 +84,6 @@ namespace FlyTying.Application.Repositories
                                
             return filter;
         }
-
-        //mapping class => dictionary <facetGroup, enum type and property path>
-        // 
     }
 }
 
