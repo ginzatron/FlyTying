@@ -14,7 +14,7 @@ namespace FlyTying.Application.Repositories
     public class RecipeRepository : MongoAsyncRepository<Recipe>, IRecipeRepository
     {
         private readonly MongoRecipeDBContext _context;
-        private static readonly string[] _facets = {"Hook_Classification", "Pattern_PatternType", "Hook_Sizes"};
+        private static readonly string[] _facets = {"Hook.Classification", "Pattern.PatternType", "Hook.Size"};
 
         public RecipeRepository(MongoRecipeDBContext context)
             : base(context)
@@ -60,9 +60,9 @@ namespace FlyTying.Application.Repositories
         {
             foreach(var facet in _facets)
             {
-                yield return AggregateFacet.Create(facet, PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
+                yield return AggregateFacet.Create(facet.Replace(".","_"), PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
                 {
-                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>($"${facet.Replace("_",".")}")
+                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>($"${facet}")
                 }));
             }
         }
