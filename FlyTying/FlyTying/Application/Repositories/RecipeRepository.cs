@@ -42,7 +42,8 @@ namespace FlyTying.Application.Repositories
 
         private async Task<IEnumerable<SearchFacet>> GenerateSearchFacets(IAggregateFluent<Recipe> matchResult, IEnumerable<SearchFacet> selectedFacets)
         {
-            var searechFacets = await matchResult.Facet(CreateFacet().ToList()).ToListAsync();
+            var x = CreateFacet().ToArray();
+            var searechFacets = await matchResult.Facet(x).ToListAsync();
             var results =  searechFacets.First().Facets.Select(x => new { Group = x.Name, Facets = x.Output<AggregateSortByCountResult<string>>() });
 
             return from result in results
@@ -89,7 +90,7 @@ namespace FlyTying.Application.Repositories
             {
                 yield return AggregateFacet.Create(facet, PipelineDefinition<Recipe, AggregateSortByCountResult<string>>.Create(new[]
                 {
-                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>($"${facet}")
+                    PipelineStageDefinitionBuilder.SortByCount<Recipe, string>("${$facet}")
                 }));
             }
         }
