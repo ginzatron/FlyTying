@@ -1,49 +1,27 @@
 <template>
-  <div class="container">
-    <the-header></the-header>
-    <div class="content">
-      <router-view class="main-content" />
-      <the-side-bar class="left-sidebar"></the-side-bar>
-    </div>
-  </div>
+  <img alt="Vue logo" src="./assets/logo.png" />
+  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
 
-<script>
-import TheHeader from "./components/general/TheHeader.vue";
-import TheSideBar from "@/components/general/TheSideBar.vue";
+<script lang="ts">
+import { defineComponent } from 'vue'
+import HelloWorld from './components/HelloWorld.vue'
 
-export default {
+export default defineComponent({
+  name: 'App',
   components: {
-    TheHeader,
-    TheSideBar,
-  },
-};
+    HelloWorld
+  }
+})
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
-
-.content {
-  display: flex;
-  flex: 1;
-}
-
-.main-content {
-  flex: 1;
-}
-
-.left-sidebar {
-  flex: 0 0 12em;
-  order: -1;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
