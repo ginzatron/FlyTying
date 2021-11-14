@@ -2,9 +2,10 @@
   <section>
     <div @click="selectFacet">{{ title }} <span v-if="!facetSelected">({{ count }})</span></div>
   </section>
+  <div></div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from "vue";
 
 export default {
