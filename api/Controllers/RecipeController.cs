@@ -1,4 +1,5 @@
-﻿using Flies.Queries;
+﻿using Flies.Commands;
+using Flies.Queries;
 using Flies.RecipeDomain;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -23,5 +24,11 @@ public class RecipeController : ControllerBase
     public async Task<Recipe> GetById(string id)
     {
         return await _mediator.Send(new GetRecipeByIdQuery(id));
+    }
+    [HttpPost]
+    public Task Create([FromBody]Recipe recipe)
+    {
+        var cmd = new CreateRecipeCommand(recipe);
+        return _mediator.Send(cmd);
     }
 }
