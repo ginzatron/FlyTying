@@ -1,15 +1,17 @@
 <template>
   <section>
-    <div @click="selectFacet">{{ title }} <span v-if="!facetSelected">({{ count }})</span></div>
+    <div @click="selectFacet">
+      {{ title }} <span v-if="!facetSelected">({{ count }})</span>
+    </div>
   </section>
   <div></div>
 </template>
 
-<script lang="ts">
+<script>
 import { ref } from "vue";
 
 export default {
-  props: ["title", "count", "group","selected"],
+  props: ["title", "count", "group", "selected"],
   emits: ["facetSelected"],
 
   setup(props, { emit }) {
@@ -30,11 +32,10 @@ export default {
       facetTitle,
       facetCount,
       selectFacet,
-      facetSelected
+      facetSelected,
     };
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

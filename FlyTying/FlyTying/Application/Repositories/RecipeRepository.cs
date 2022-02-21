@@ -25,11 +25,11 @@ namespace FlyTying.Application.Repositories
         public async Task<UpdatedFacetResults> GenerateFacets(IEnumerable<SearchFacet> selectedFacets)
         {
             var aggregate = _collection.Aggregate();
-            var matchingFilter = BuildFilterFromFacets(selectedFacets);
+            var matchingFilter = BuildFilterFromFacets(selectedFacets); // you build a filter that looks for recipes in this filter, in this filter etc
 
-            var matchResult = aggregate.Match(matchingFilter);
+            var matchResult = aggregate.Match(matchingFilter); // then you run that filter and get all the flies back that have that criteria
 
-            var searchFacets = await GenerateSearchFacets(matchResult, selectedFacets);
+            var searchFacets = await GenerateSearchFacets(matchResult, selectedFacets);  // then you generate new faces based on that returned set of recipes
 
             var returnSet = new UpdatedFacetResults()
             {
@@ -56,6 +56,8 @@ namespace FlyTying.Application.Repositories
                     });
         }
 
+        // this is an actual mongo thing that returns all the different hook classifications or patter types that exist across all flies and how many of each
+        // ex Egg(7), Tactucal(4)
         private IEnumerable<AggregateFacet<Recipe, AggregateSortByCountResult<string>>> CreateFacet()
         {
             foreach(var facet in _facets)
@@ -67,6 +69,7 @@ namespace FlyTying.Application.Repositories
             }
         }
 
+        // Builds the filter that says, recipe in x classifcation or y pattern type
         private FilterDefinition<Recipe> BuildFilterFromFacets(IEnumerable<SearchFacet> facets)
         {
             var filter = Builders<Recipe>.Filter.Empty;

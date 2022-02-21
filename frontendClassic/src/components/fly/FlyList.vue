@@ -18,19 +18,20 @@ export default {
   props: ["list"],
   setup(props) {
     const flys = ref(props.list);
-    const searchTerm = ref('');
+    const searchTerm = ref("");
 
     const filteredFlys = computed(() => {
-      return flys.value.filter((f) => f.name.toLowerCase().includes(searchTerm.value));
-    })
+      return flys.value.filter((f) =>
+        f.name.toLowerCase().includes(searchTerm.value)
+      );
+    });
 
     return {
       filteredFlys,
-      searchTerm
+      searchTerm,
     };
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
