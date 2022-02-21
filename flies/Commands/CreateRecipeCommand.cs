@@ -23,4 +23,8 @@ public class CreateRecipeCommandHandler : IRequestHandler<CreateRecipeCommand, T
     }
 }
 
+// could still abstract this out to a repository
+// would gain just bringing in the repo and not having to worry about connecting to mongo and
+// method implementation
+
 

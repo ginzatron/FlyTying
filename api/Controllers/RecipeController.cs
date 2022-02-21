@@ -16,14 +16,16 @@ public class RecipeController : ControllerBase
         _mediator = mediator;
     }
     [HttpGet]
-    public async Task<IEnumerable<Recipe>> Get()
+    public async Task<IActionResult> Get()
     {
-        return await _mediator.Send(new GetRecipeListQuery());
+        var result = await _mediator.Send(new GetRecipeListQuery());
+        return Ok(result);
     }
     [HttpGet("{id}")]
-    public async Task<Recipe> GetById(string id)
+    public async Task<IActionResult> GetById(string id)
     {
-        return await _mediator.Send(new GetRecipeByIdQuery(id));
+        var result = await _mediator.Send(new GetRecipeByIdQuery(id));
+        return Ok(result);
     }
     [HttpPost]
     public Task Create([FromBody]Recipe recipe)

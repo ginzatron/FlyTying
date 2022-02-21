@@ -1,13 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contexts\" />
-    <Folder Include="Domain\Inventory\" />
-    <Folder Include="Domain\Fly\" />
+    <Compile Remove="Contexts\**" />
+    <Compile Remove="Domain\Fly\**" />
+    <Compile Remove="Domain\Inventory\**" />
+    <Content Remove="Contexts\**" />
+    <Content Remove="Domain\Fly\**" />
+    <Content Remove="Domain\Inventory\**" />
+    <EmbeddedResource Remove="Contexts\**" />
+    <EmbeddedResource Remove="Domain\Fly\**" />
+    <EmbeddedResource Remove="Domain\Inventory\**" />
+    <None Remove="Contexts\**" />
+    <None Remove="Domain\Fly\**" />
+    <None Remove="Domain\Inventory\**" />
   </ItemGroup>
 
   <ItemGroup>
